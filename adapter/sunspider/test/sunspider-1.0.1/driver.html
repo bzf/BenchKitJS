@@ -44,7 +44,7 @@
 var testIndex = -1;
 var currentRepeat = -1;
 //var repeatCount = 10;
-var repeatCount = 2;
+var repeatCount = 1;
 
 var output = [];
 output.length = repeatCount;
@@ -91,7 +91,6 @@ function recordResult(time)
 
 function finish()
 {
-	window.parent.testDone(output);	
     var outputString = "{";
     outputString += '"v": "sunspider-1.0.1", ';
     for (var test in output[0]) {

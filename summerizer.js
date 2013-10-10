@@ -47,7 +47,7 @@ Summerizer.prototype.complete = function() {
 	this.iframe.src = "";
 	this.output("Complete");
 	this.output("");
-	console.log(this.data);
+	console.log(JSON.stringify(this.data));
 	this.output(JSON.stringify(this.data));
 }
 
