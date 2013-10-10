@@ -2,8 +2,8 @@
 
 var testsData = [
 	{
-		name: "Testing", 
-		path: "/adapter/testing/",
+		name: "Dromaeo", 
+		path: "/adapter/dromaeo/",
 		version: "0.1"
 	},
 	{
