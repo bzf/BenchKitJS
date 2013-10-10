@@ -1,5 +1,3 @@
-/**/
-
 var testsData = [
 	{
 		name: "Testing", 
