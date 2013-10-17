@@ -16,5 +16,11 @@ var testsData = [
 		path: "/adapter/sunspider/",
 		version: "1.0.1",
 		group: [""]
-	}
+	},
+    {
+		name: "themaninblue-svg",
+		path: "/adapter/themaninblue-svg/",
+		version: "0.1",
+		group: [""]
+    }    
 ];
