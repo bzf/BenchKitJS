@@ -2,11 +2,8 @@
  * Mozilla Dromaeo - JavaScript test suite.
  * http://dromaeo.com/
  *
- * Supported args is group, if the group is defined in the constructor 
+ * Supported argument is group, if the group is defined in the constructor 
  * with a specific regexp a set of predetermined tests will be excecuted. 
- *
- * A planned second argument is "times" wich will define the number of times each test till be performed.
- * In order for this to work we need to calculate the mean values and merge the objects.
  *
  * The default behaviour is to cluster the tests and run them in groups, 
  * this will prevent memory shortage on embedded devices. This will be managed by the testDone function 
@@ -20,24 +17,26 @@
  */
 
 var Adapter = function(args) {
-	this.data = {};
-	var regexps;
+	this.data = [];
+	var regexps = [];
 
 	this.config = {
 		name : "Dromaeo",
 		version : "?"
 	};
 
+	cssquery = ["cssquery-(ext|dojo)", "cssquery-(jquery|yui)", "cssquery-(mootools|prototype)"];
+	jslib = ["jslib-attr", "jslib-event", "jslib-mod", "jslib-style", "jslib-trav"];
 
 	switch (args.group) {
 		case "js":
-			regexps = ["sunspider", "jslib", "v8", "dromaeo"];
+			regexps = regexps.concat(["sunspider"], jslib, ["v8", "dromaeo"]);
 			break;
 		case "dom":
-			regexps = ["cssquery", "dom", "jslib"]
+			regexps = regexps.concat(cssquery, ["dom"]);
 			break;
 		default:
-			regexps = ["sunspider", "dromaeo", "cssquery", "dom", "jslib", "v8"]
+			regexps = regexps.concat(["sunspider", "dromaeo"], cssquery, jslib, ["dom", "v8"]);
 	}
 
 	this.runTest(regexps);
@@ -54,13 +53,14 @@ Adapter.prototype.runTest = function(regexps) {
 
 	window.testDone = function(data) {
 		
-		self.data[regexps[counter]] = data;
+		console.log(data)
+		self.data = self.data.concat(data);
 		if (0 != counter){
 			counter--
 			document.getElementById("adapterFrame").src = "test/index.html?(" + regexps[counter] +")";
 		}
 		else {
-			self.parseData(self.data)
+			self.parseData(self.data);
 		}
 	}
 }
