@@ -20,14 +20,15 @@
 var Adapter = function() {
     // Information about the adapter
     this.config = {
-	name : "themaninblue-svg",
-	version : "0.1"
+		name : "themaninblue-svg",
+		version : "0.1"
     };
+
     this.runTest();
 }
 
 /*
- * Run automaticlly when a new instace of Adapter is created
+ * Runs automaticlly when a new instace of Adapter is created
  */
 Adapter.prototype.runTest = function() {
     var self = this;
@@ -81,4 +82,6 @@ Adapter.prototype.parseData = function(data) {
     window.parent.adapterDone(this.config);
 }
 
-new Adapter();
+function createAdapter(args) {
+	new Adapter();
+}
