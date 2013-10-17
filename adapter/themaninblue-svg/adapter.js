@@ -1,4 +1,20 @@
 /*
+ * Testname: themaninblue-svg
+ * Original link: http://themaninblue.com/experiment/AnimationBenchmark/svg/
+ * Date: 2013-10-17
+ *
+ * Description:
+ * The test produces 500 particles which are then animated to 'bounce' off the
+ * edges of the screen. These particles are being drawn using SVG.
+ *
+ * Each second we look for a value in the #frameRate of the iframe, and that's the
+ * FPS value that we use for calculating the average later on.
+ * The test runs for 13 seconds. The first 3 seconds are discarded and the
+ * last 10 FPS results are saved. The test then calculates the average of these 
+ * and returns that average.
+ */
+
+/*
  * Constructor for Adapter
  */
 var Adapter = function() {
