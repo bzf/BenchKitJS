@@ -16,7 +16,6 @@
 	// Initialize a batch of tests
 	//  name = The name of the test collection
 	this.startTest = function(name, version){
-		console.log("stert " + name + " " + version)
 		numloaded++;
 		if ( numloaded == totalTests )
 			setTimeout( init, 100 );
@@ -355,9 +354,11 @@
 			
 		} else if ( queue.length == 0 ) {
 
-//############################
+
+		//############################
+		// This piece of code runs the callback when the test is completed
 			window.parent.testDone(dataStore)
-//############################
+		//############################
 
 			interval = false;
 			time = 0;
@@ -428,6 +429,7 @@
 			});
 
 		//############################
+		// This piece of code will autostart the test
 
 		if ( interval ) {
 			interval = null;
