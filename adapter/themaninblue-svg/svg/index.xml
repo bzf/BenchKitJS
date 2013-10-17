@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" lang="en">
+
+
+
+
+<head>
+
+	<title>Benchmark - HTML &amp; JavaScript</title>
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="author" content="The Man in Blue" />
+	<meta name="robots" content="all" />
+	<meta name="MSSmartTagsPreventParsing" content="true" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+
+	<style type="text/css">
+	
+	html
+	{
+		height: 100%;
+	}
+	
+	body
+	{
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+	}
+	
+	span
+	{
+		position: absolute;
+		width: 12px;
+		height: 12px;
+		overflow: hidden;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		background-color: #000000;
+	}
+	
+	.shadows span
+	{
+		-webkit-box-shadow: 4px 4px 3px rgba(0,0,0,0.33);
+		-moz-box-shadow: 4px 4px 3px rgba(0,0,0,0.33);
+	}
+	
+	#frameRate
+	{
+		position: absolute;
+		right: 10px;
+		bottom: 10px;
+		z-index: 100;
+		font-size: 25px;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	
+	</style>
+	
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+
+
+
+
+<body>
+	<svg:svg id="benchmark" width="100%" height="100%">
+	</svg:svg>
+	<div id="frameRate">
+	</div>
+</body>
+
+
+
+
+</html>
