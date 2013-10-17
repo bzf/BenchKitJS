@@ -28,5 +28,11 @@ var testsData = [
 	path: "/adapter/themaninblue-canvas/",
 	version: "0.1",
 	group: [""]
-    }
+    },
+    {
+		name: "themaninblue-html",
+		path: "/adapter/themaninblue-html/",
+		version: "0.1",
+		group: [""]
+    }    
 ];
