@@ -22,5 +22,11 @@ var testsData = [
 		path: "/adapter/themaninblue-svg/",
 		version: "0.1",
 		group: [""]
+    },
+    {
+		name: "themaninblue-html",
+		path: "/adapter/themaninblue-html/",
+		version: "0.1",
+		group: [""]
     }    
 ];
