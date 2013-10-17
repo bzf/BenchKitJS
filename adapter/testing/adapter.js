@@ -1,6 +1,6 @@
 
 // Constructor
-var Adapter = function() {
+var Adapter = function(args) {
 	this.runTest();
 }
 
@@ -17,4 +17,6 @@ Adapter.prototype.parseData = function(data) {
 	window.parent.adapterDone(data);
 }
 
-new Adapter();
+function createAdapter(args) {
+	new Adapter(args)
+}

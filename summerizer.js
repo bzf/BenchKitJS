@@ -20,7 +20,7 @@ var Summerizer = function() {
  * Start the iteration of the adapters
  */ 
 Summerizer.prototype.start = function() {	
-	this.nextAdapter();
+	this.runAdapter();
 }
 
 /*
@@ -28,12 +28,12 @@ Summerizer.prototype.start = function() {
  * @name    name of the adapater
  * @path    path to the adapter(e.g "/adapter/testing/")
  */
-Summerizer.prototype.loadAdapter = function(name, path) {
+Summerizer.prototype.loadAdapter = function(test) {
 	// Store this to make it accessible in a function scope
 	var self = this;	
-	this.currentTest = name;
+	this.currentTest = test;
 	
-	this.output("Running: " + this.currentTest);
+	this.output("Running: " + this.currentTest.name);
 
 	// Callback for the adapater, so that it can send the data back
 	// to the summerizer
@@ -42,41 +42,46 @@ Summerizer.prototype.loadAdapter = function(name, path) {
 	}
 
 	// Load the adapter to the iframe
-	this.iframe.src = path + "adapter.html";
+	this.iframe.src = test.path + "adapter.html";
+	this.iframe.onload = function() {
+		var args = {};
+		args["group"] = test.group[0];
+		this.contentWindow.createAdapter(args)
+	}
 }
-
 /*
  * Called when an adapter is done.
+ * Iterate and run the next adapter.
+ * If the counter is equal to test.lenght, run complete 
  * @data     formated data from the adapter(result)
  */
 Summerizer.prototype.doneAdapter = function(data) {
-	this.data[this.currentTest] = data;
-	this.nextAdapter();
-}
-
-/*
- * Iterate and run the next adapter.
- * If the counter is equal to test.lenght, run complete
- */
-Summerizer.prototype.nextAdapter = function() {
-	// Check if done
-	if(this.counter == this.tests.length) {
-		this.complete();
-		return;
-	}
-
-	// Next test
-	var test = this.tests[this.counter];
-	this.loadAdapter(test.name, test.path);
+	this.data[this.currentTest.name] = data;
 
 	// Increase counter
 	this.counter++;
+	// Check if done
+	if(this.counter < this.tests.length) {
+		this.runAdapter();
+	} else {
+		this.complete();
+	}
+}
+
+/*
+ * Run adapter according to counter.
+ */
+Summerizer.prototype.runAdapter = function() {
+	// Next test
+	var test = this.tests[this.counter]
+	this.loadAdapter(test)
 }
 
 /*
  * Output the completed sessions data to both dom and console.
  */
 Summerizer.prototype.complete = function() {
+	this.iframe.onload = null
 	this.iframe.src = "";
 	this.output("Complete");
 	this.output("");

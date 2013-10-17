@@ -1,7 +1,9 @@
 /*
  * Constructor for Adapter
  */
-var Adapter = function() {
+var Adapter = function(args) {
+	this.group = args.group
+	
 	// Information about the adapter
 	this.config = {
 		name : "Example",
@@ -60,7 +62,6 @@ Adapter.prototype.runTest = function() {
 	
 }
 
-
 /*
  * Format the data. E.g sum of avg if several runs.
  * Sends the data back to the summerizer
@@ -69,5 +70,9 @@ Adapter.prototype.parseData = function(data) {
 	window.parent.adapterDone(data);
 }
 
-// Out commented, becasuse this is an example only
-//new Adapter();
+/* Called to create an adater
+ * @args [object]
+ */
+function createAdapter(args) {
+	new Adapter(args)
+}
