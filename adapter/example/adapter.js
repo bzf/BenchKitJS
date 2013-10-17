@@ -1,6 +1,6 @@
 /*
  * Constructor for Adapter
- */
+ */x
 var Adapter = function(args) {
 	this.group = args.group
 	
@@ -13,7 +13,7 @@ var Adapter = function(args) {
 }
 
 /*
- * Run automaticlly when a new instace of Adapter is created
+ * Runs when a new instace of Adapter is created
  */
 Adapter.prototype.runTest = function() {
 	var self = this;
@@ -70,7 +70,7 @@ Adapter.prototype.parseData = function(data) {
 	window.parent.adapterDone(data);
 }
 
-/* Called to create an adater
+/* Called to create an adapter
  * @args [object]
  */
 function createAdapter(args) {
