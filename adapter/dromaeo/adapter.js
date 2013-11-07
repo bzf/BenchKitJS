@@ -38,9 +38,8 @@ var Adapter = function(args) {
 		default:
 			regexps = regexps.concat(["sunspider", "dromaeo"], cssquery, jslib, ["dom", "v8"]);
 	}
-
+	
 	this.runTest(regexps);
-
 }
 
 Adapter.prototype.runTest = function(regexps) {
@@ -53,7 +52,6 @@ Adapter.prototype.runTest = function(regexps) {
 
 	window.testDone = function(data) {
 		
-		console.log(data)
 		self.data = self.data.concat(data);
 		if (0 != counter){
 			counter--
@@ -70,3 +68,4 @@ Adapter.prototype.parseData = function(data) {
 }
 
 function createAdapter(args){new Adapter(args);}
+

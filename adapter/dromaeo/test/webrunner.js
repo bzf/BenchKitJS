@@ -301,7 +301,7 @@
 					names.push( name );
 
 			names = names.sort(function(a, b){
-				return tests[a].name < tests[b].name ?  -1 :
+				return tests[a].name < tests[b].name ?  -1 : 
 					tests[a].name == tests[b].name ?  0 : 1;
 			});
 
