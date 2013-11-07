@@ -23,6 +23,12 @@ var testsData = [
 		version: "1.0.1",
 		group: [""]
     },
+	{
+		name: "Kraken", 
+		path: "/adapter/kraken/",
+		version: "1.1",
+		group: [""]
+    },
     {
 		name: "themaninblue-svg",
 		path: "/adapter/themaninblue-svg/",
