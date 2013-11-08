@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+  <script src="detect.js"></script>
+  <script src="engine.js"></script>
+  <script>
+  	function finish(g) {}
+  	Browsers = new UserAgents({
+  		useFeatures: 		true,
+  		detectCamouflage: 	true 
+  	});
+
+
+	new Test(function(g) {
+		finish(g);
+	});
+
+
+  </script>
+  
+</body>
+</html>
