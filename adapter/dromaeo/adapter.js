@@ -57,15 +57,15 @@ Adapter.prototype.runTest = function(regexps) {
 
 	document.getElementById("adapterFrame").src = null;
 	document.getElementById("adapterFrame").src = "test/index.html?(" + regexps[counter] +")";
-	//window.parent.output("<br />" + regexps[counter]);
+	window.parent.output("<br />" + regexps[counter]);
 
 	window.testDone = function(data) {
 		
 		self.data = self.data.concat(data);
 		if (0 != counter){
 			counter--
-			//window.parent.output(": " + (Date.now() - start)/1000 + "s<br />");
-			//window.parent.output(regexps[counter]);
+			window.parent.output(": " + (Date.now() - start)/1000 + "s<br />");
+			window.parent.output(regexps[counter]);
 			document.getElementById("adapterFrame").src = null;
 			setTimeout(function() {
 				document.getElementById("adapterFrame").src = "test/index.html?(" + regexps[counter] +")";
@@ -74,7 +74,7 @@ Adapter.prototype.runTest = function(regexps) {
 			}, 10000);
 		}
 		else {
-			//window.parent.output(": " + (Date.now() - start)/1000 + "s<br />");
+			window.parent.output(": " + (Date.now() - start)/1000 + "s<br />");
 			self.parseData(self.data);
 		}
 	}

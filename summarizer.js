@@ -40,20 +40,24 @@ Summarizer.prototype.loadAdapter = function(test) {
 	window.adapterDone = function(data) {
 		self.doneAdapter(data);
 	}
-    
-    //Toggles fullscreen to on or off depending if "state" is "on" or "off"
+	// Print function for the left div, used by adapters to print results.
+    window.output = function(text) { 
+    	self.output(text);
+    }
+
+   	 //Toggles fullscreen to on or off depending if "state" is "on" or "off"
     window.toggleFullscreen = function(state) {
+
+		//Set to fullscreen
+		if (state === "on") {	
+		    window.parent.document.getElementById("left").style.width = "0%";
+		    window.parent.document.getElementById("right").style.width = "100%";
+		}
 	
-	//Set to fullscreen
-	if (state === "on") {	
-	    window.parent.document.getElementById("left").style.width = "0%";
-	    window.parent.document.getElementById("right").style.width = "100%";
-	}
-	
-	//Set to normal screen size
-	if (state === "off") {
-	    window.parent.document.getElementById("left").style.width = "50%";
-	    window.parent.document.getElementById("right").style.width = "50%";
+		//Set to normal screen size
+		if (state === "off") {
+		    window.parent.document.getElementById("left").style.width = "50%";
+		    window.parent.document.getElementById("right").style.width = "50%";
 	}
     }
 
@@ -110,7 +114,7 @@ Summarizer.prototype.complete = function() {
  * Output helper
  */
 Summarizer.prototype.output = function(text) {
-	document.getElementById("output").innerHTML += "<p>" + text + "</p>";
+	document.getElementById("output").innerHTML += text ;
 }
 
 // New instance of summarizer
