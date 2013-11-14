@@ -51,11 +51,13 @@ Summarizer.prototype.loadAdapter = function(test) {
 		//Set to fullscreen
 		if (state === "on") {	
 		    window.parent.document.getElementById("left").style.width = "0%";
+		    window.parent.document.getElementById("left").style.display = "none";
 		    window.parent.document.getElementById("right").style.width = "100%";
 		}
 	
 		//Set to normal screen size
 		if (state === "off") {
+		    window.parent.document.getElementById("left").style.display = "block";
 		    window.parent.document.getElementById("left").style.width = "50%";
 		    window.parent.document.getElementById("right").style.width = "50%";
 	}
