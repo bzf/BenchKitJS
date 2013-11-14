@@ -36,6 +36,8 @@ Adapter.prototype.runTest = function() {
     var iframe = document.getElementById("adapterFrame");
     var contentWindow = iframe.contentWindow;
 
+    window.parent.toggleFullscreen("on");
+    
     // Load the test
     document.getElementById("adapterFrame").src = "canvas/index.htm";
 
@@ -76,6 +78,8 @@ Adapter.prototype.parseData = function(data) {
 	average += data[i];
 	average /= 2;
     }
+
+    window.parent.toggleFullscreen("off");
     
     //Add the average to the result object
     this.config["result"] = average;    

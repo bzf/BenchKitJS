@@ -8,7 +8,7 @@
 /*
  * Constructor for Summerizer
  */
-var Summerizer = function() {
+var Summarizer = function() {
 	this.tests = testsData;
 	this.counter = 0;
 	this.currentTest = null;
@@ -19,7 +19,7 @@ var Summerizer = function() {
 /*
  * Start the iteration of the adapters
  */ 
-Summerizer.prototype.start = function() {	
+Summarizer.prototype.start = function() {	
 	this.runAdapter();
 }
 
@@ -28,7 +28,7 @@ Summerizer.prototype.start = function() {
  * @name    name of the adapater
  * @path    path to the adapter(e.g "/adapter/testing/")
  */
-Summerizer.prototype.loadAdapter = function(test) {
+Summarizer.prototype.loadAdapter = function(test) {
 	// Store this to make it accessible in a function scope
 	var self = this;	
 	this.currentTest = test;
@@ -36,10 +36,27 @@ Summerizer.prototype.loadAdapter = function(test) {
 	this.output("Running: " + this.currentTest.name);
 
 	// Callback for the adapater, so that it can send the data back
-	// to the summerizer
+	// to the summarizer
 	window.adapterDone = function(data) {
 		self.doneAdapter(data);
 	}
+    
+    //Toggles fullscreen to on or off depending if "state" is "on" or "off"
+    window.toggleFullscreen = function(state) {
+	
+	//Set to fullscreen
+	if (state === "on") {	
+	    window.parent.document.getElementById("left").style.width = "0%";
+	    window.parent.document.getElementById("right").style.width = "100%";
+	}
+	
+	//Set to normal screen size
+	if (state === "off") {
+	    window.parent.document.getElementById("left").style.width = "50%";
+	    window.parent.document.getElementById("right").style.width = "50%";
+	}
+    }
+
 
 	// Load the adapter to the iframe
 	this.iframe.src = test.path + "adapter.html";
@@ -55,7 +72,7 @@ Summerizer.prototype.loadAdapter = function(test) {
  * If the counter is equal to test.lenght, run complete 
  * @data     formated data from the adapter(result)
  */
-Summerizer.prototype.doneAdapter = function(data) {
+Summarizer.prototype.doneAdapter = function(data) {
 	this.data[this.currentTest.name] = data;
 
 	// Increase counter
@@ -71,7 +88,7 @@ Summerizer.prototype.doneAdapter = function(data) {
 /*
  * Run adapter according to counter.
  */
-Summerizer.prototype.runAdapter = function() {
+Summarizer.prototype.runAdapter = function() {
 	// Next test
 	var test = this.tests[this.counter]
 	this.loadAdapter(test)
@@ -80,7 +97,7 @@ Summerizer.prototype.runAdapter = function() {
 /*
  * Output the completed sessions data to both dom and console.
  */
-Summerizer.prototype.complete = function() {
+Summarizer.prototype.complete = function() {
 	this.iframe.onload = null
 	this.iframe.src = "";
 	this.output("Complete");
@@ -92,11 +109,11 @@ Summerizer.prototype.complete = function() {
 /*
  * Output helper
  */
-Summerizer.prototype.output = function(text) {
+Summarizer.prototype.output = function(text) {
 	document.getElementById("output").innerHTML += "<p>" + text + "</p>";
 }
 
-// New instance of summerizer
-var summerizer = new Summerizer();
-summerizer.start();
+// New instance of summarizer
+var summarizer = new Summarizer();
+summarizer.start();
 
