@@ -45,5 +45,3 @@ Adapter.prototype.parseData = function(data) {
 function createAdapter(args) {
 	new Adapter(args)
 }
-
-createAdapter({});
