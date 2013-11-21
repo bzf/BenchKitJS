@@ -1,6 +1,6 @@
 
 /*
-  -BenchKitJS
+  - BenchKitJS
   Testing framework, for running several web browser tests in a synchronized order.
 */
 
@@ -9,7 +9,7 @@
  * Constructor for Summerizer
  */
 var Summarizer = function() {
-	this.tests = testsData;
+	this.tests = parseUrl(window.location.hash);//testsData;
 	this.counter = 0;
 	this.currentTest = null;
 	this.iframe = document.getElementById("mainFrame");
@@ -19,7 +19,8 @@ var Summarizer = function() {
 /*
  * Start the iteration of the adapters
  */ 
-Summarizer.prototype.start = function() {	
+Summarizer.prototype.start = function() {
+	
 	this.runAdapter();
 }
 
@@ -32,8 +33,7 @@ Summarizer.prototype.loadAdapter = function(test) {
 	// Store this to make it accessible in a function scope
 	var self = this;	
 	this.currentTest = test;
-	
-	this.output("Running: " + this.currentTest.name);
+	this.output("Running: " + this.currentTest.name + "<br />");
 
 	// Callback for the adapater, so that it can send the data back
 	// to the summarizer
@@ -120,6 +120,23 @@ Summarizer.prototype.output = function(text) {
 }
 
 // New instance of summarizer
-var summarizer = new Summarizer();
-summarizer.start();
+var summarizer = ""
+function startSummarizer() {	
+	document.getElementById("output").innerHTML = "";
+	summarizer = new Summarizer();
+	summarizer.start();
+}
+startSummarizer();
 
+if ("onhashchange" in window) { // event supported?
+    window.onhashchange = startSummarizer;
+}
+else { // event not supported:
+    var storedHash = window.location.hash;
+    window.setInterval(function () {
+        if (window.location.hash != storedHash) {
+            storedHash = window.location.hash;
+			startSummarizer();
+        }
+    }, 100);
+}
