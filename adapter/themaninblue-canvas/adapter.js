@@ -1,6 +1,6 @@
 /*
- * Testname: themaninblue-svg
- * Original link: http://themaninblue.com/experiment/AnimationBenchmark/svg/
+ * Testname: themaninblue-canvas
+ * Original link: http://themaninblue.com/experiment/AnimationBenchmark/canvas/
  * Date: 2013-10-17
  *
  * Description:
