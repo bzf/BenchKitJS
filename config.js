@@ -1,5 +1,11 @@
 var testsData = [
     {
+		name: "HTML5test", 
+		path: "/adapter/html5test/",
+		version: "4.0",
+		group: [""]
+    },
+    {
 		name: "Dromaeo", 
 		path: "adapter/dromaeo/",
 		version: "0.1",
