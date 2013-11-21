@@ -40,8 +40,7 @@ Adapter.prototype.runTest = function() {
     window.parent.toggleFullscreen("on");
     
     // Load the test
-    document.getElementById("adapterFrame").src = "test/index.htm";
-	console.log("LOADED!");
+    document.getElementById("adapterFrame").src = "html/index.html";
 
     // Wait for iframe to load
     iframe.onload = function() {
