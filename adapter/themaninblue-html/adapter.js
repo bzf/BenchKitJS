@@ -38,8 +38,7 @@ Adapter.prototype.runTest = function() {
     var contentWindow = iframe.contentWindow;
 
     // Load the test
-    document.getElementById("adapterFrame").src = "test/index.htm";
-	console.log("LOADED!");
+    document.getElementById("adapterFrame").src = "html/index.html";
 
     // Wait for iframe to load
     iframe.onload = function() {
