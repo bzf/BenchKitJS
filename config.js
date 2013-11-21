@@ -9,6 +9,11 @@ var testsData = {
 	],
 	"js" : [
 		{
+			name: "kraken", 
+			path: "/adapter/kraken/",
+			version: "1.1",
+		},
+		{
 			name: "dromaeo", 
 			path: "/adapter/dromaeo/",
 			version: "0.1",
