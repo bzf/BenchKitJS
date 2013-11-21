@@ -7,6 +7,8 @@
 // Takes a URL and returns a list with options
 function parseUrl(url) {
 	var list = listAll;
+	var params;
+
 	if(url) {
 		url = url.replace(/#[\/]?/, "");
 
@@ -17,11 +19,7 @@ function parseUrl(url) {
 		list = buildList(params);
 	}
 
-	var n_list = Object.keys(list).map(function (key) {
-		return list[key];
-	});
-
-	return n_list;
+	return list;
 }
 
 function buildList(params)  {
@@ -50,6 +48,7 @@ function buildList(params)  {
 
 function createList(if_condition) {
 	var list = []
+	var group;
 	for(var groupName in testsData) {
 		group = testsData[groupName];
 		for(var idTest in group) {
@@ -68,6 +67,7 @@ function createList(if_condition) {
 // the specified parameters.
 function parse_options(params, list) {
 	if (params.length == 0) return list;
+
 	var option = params.shift();
 	var new_list = {};
 
@@ -104,13 +104,13 @@ function parse_options(params, list) {
 };
 
 // When the URL is changed, rerun the test (HTML5).
+// If the HTML5-event is not supported, check the URL at a interval to
+// determine if the URL has been updated.
 if ("onhashchange" in window) { // event supported?
     window.onhashchange = function () {
         hashChanged(window.location.hash);
     }
 }
-// If the HTML5-event is not supported, check the URL at a interval to
-// determine if the URL has been updated.
 else { // event not supported:
     var storedHash = window.location.hash;
     window.setInterval(function () {
