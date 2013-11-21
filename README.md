@@ -20,17 +20,53 @@ An adapters runs its test inside an iframe. When the adapter has decided it's do
 When all the adapters are finished, the summerizer dumps the data to both the console and the DOM.
 Tests implemented
 ---
+
   - [Mozilla Dromaeo](http://dromaeo.com/) [2013-11-NN]
   - [themaninblue-svg](http://themaninblue.com/experiment/AnimationBenchmark/svg/) [2013-10-17]
   - [themaninblue-canvas](http://themaninblue.com/experiment/AnimationBenchmark/canvas/) [2013-10-17]
   - [themaninblue-html](http://themaninblue.com/experiment/AnimationBenchmark/html/) [2013-10-17]
 
-## Config.js
-	{
-		name: "Example", 
-		path: "/adapter/example/",
-		version: "0.1"
-	}
+## [config.js](./config.js)
+	var testsData = {
+		"dom" : [
+			{
+				name: "themaninblue-html",
+				path: "/adapter/themaninblue-html/",
+				version: "0.1",
+			}   
+		],
+		"js" : [
+			{
+				name: "dromaeo", 
+				path: "/adapter/dromaeo/",
+				version: "0.1",
+			},
+			{
+				name: "Sunspider", 
+				path: "/adapter/sunspider/",
+				version: "1.0.1",
+			}
+		],
+		"canvas" : [
+	
+			{
+				name: "themaninblue-canvas",
+				path: "/adapter/themaninblue-canvas/",
+				version: "0.1",
+			},
+		],
+		"svg" : [
+			{
+				name: "themaninblue-svg",
+				path: "/adapter/themaninblue-svg/",
+				version: "0.1",
+			},
+			
+		],
+		"conformance" : [
+	
+		]
+	};
 
 How to start test via the URL
 ---
@@ -40,7 +76,8 @@ The format looks like this:
 ```URL: #/<selected_tests>/[<options>]```
 
 **selected_tests** is a comma-seperated list which specifies which tests should be selected. The elements of the list can either be *all* (which will represents all available tests) or a *group/testname*.
-The availble testgroups as of now are:
+The available testgroups as of now are:
+
 * ```dom```
 * ```js```
 * ```canvas```
@@ -48,10 +85,11 @@ The availble testgroups as of now are:
 * ```svg```
 
 **options** is filters for the given list. The available options are:
+
 * ```exclude/<selected_tests>```
 * ```include/<selected_tests>```
 
-The **options** works as expected. If you use the exclude option you will filter out tests from the given list and if you use the include option you will include tests.
+The **options** works as you would expect. If you use the exclude option you will filter out tests from the given list and if you use the include option you will include tests.
 
 ### Examples
 *Run all tests*
