@@ -1,6 +1,6 @@
 
 /*
-  -BenchKitJS
+  - BenchKitJS
   Testing framework, for running several web browser tests in a synchronized order.
 */
 
@@ -33,7 +33,6 @@ Summarizer.prototype.loadAdapter = function(test) {
 	// Store this to make it accessible in a function scope
 	var self = this;	
 	this.currentTest = test;
-	
 	this.output("Running: " + this.currentTest.name + "<br />");
 
 	// Callback for the adapater, so that it can send the data back

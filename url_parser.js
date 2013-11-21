@@ -18,8 +18,12 @@ function parseUrl(url) {
 		params = params.map(function(n){return n.toLowerCase()});
 		list = buildList(params);
 	}
-
-	return list;
+	var n_list = Object.keys(list).map(function (key) {
+                return list[key];
+    });
+	
+    return n_list;
+	return n_list;
 }
 
 function buildList(params)  {
@@ -102,21 +106,3 @@ function parse_options(params, list) {
 	/* Recursion is pretty */
 	return parse_options(params, new_list);
 };
-
-// When the URL is changed, rerun the test (HTML5).
-// If the HTML5-event is not supported, check the URL at a interval to
-// determine if the URL has been updated.
-if ("onhashchange" in window) { // event supported?
-    window.onhashchange = function () {
-        hashChanged(window.location.hash);
-    }
-}
-else { // event not supported:
-    var storedHash = window.location.hash;
-    window.setInterval(function () {
-        if (window.location.hash != storedHash) {
-            storedHash = window.location.hash;
-            hashChanged(storedHash);
-        }
-    }, 100);
-}
