@@ -1,0 +1,8 @@
+[
+	{
+		name: "themaninblue-html",
+		path: "/adapter/themaninblue-html/",
+		version: "0.1",
+		groups: ["dom"]
+	}
+]

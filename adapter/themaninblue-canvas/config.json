@@ -1,0 +1,8 @@
+[
+	{
+		name: "themaninblue-canvas",
+		path: "/adapter/themaninblue-canvas/",
+		version: "0.1",
+		groups: ["canvas"]
+	}
+]

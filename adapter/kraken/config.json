@@ -1,0 +1,8 @@
+[
+	{
+		name: "kraken", 
+		path: "/adapter/kraken/",
+		version: "1.1",
+		groups: ["js", "high-mem"]
+	}
+]
