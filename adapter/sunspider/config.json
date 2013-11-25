@@ -1,0 +1,8 @@
+[
+	{
+		"name": "Sunspider", 
+		"path": "/adapter/sunspider/",
+		"version": "1.0.1",
+		"groups": ["js"]
+	}
+]
