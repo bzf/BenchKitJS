@@ -26,47 +26,14 @@ Tests implemented
   - [themaninblue-canvas](http://themaninblue.com/experiment/AnimationBenchmark/canvas/) [2013-10-17]
   - [themaninblue-html](http://themaninblue.com/experiment/AnimationBenchmark/html/) [2013-10-17]
 
-## [config.js](./config.js)
-	var testsData = {
-		"dom" : [
-			{
-				name: "themaninblue-html",
-				path: "/adapter/themaninblue-html/",
-				version: "0.1",
-			}   
-		],
-		"js" : [
-			{
-				name: "dromaeo", 
-				path: "/adapter/dromaeo/",
-				version: "0.1",
-			},
-			{
-				name: "Sunspider", 
-				path: "/adapter/sunspider/",
-				version: "1.0.1",
-			}
-		],
-		"canvas" : [
-	
-			{
-				name: "themaninblue-canvas",
-				path: "/adapter/themaninblue-canvas/",
-				version: "0.1",
-			},
-		],
-		"svg" : [
-			{
-				name: "themaninblue-svg",
-				path: "/adapter/themaninblue-svg/",
-				version: "0.1",
-			},
-			
-		],
-		"conformance" : [
-	
-		]
-	};
+## config.json example
+	[
+		"name": "testName",
+		"path": "/adapters/testFolder/",
+		"version": "X.X",
+		"groups": ["group1", "group2"],
+		"args": "argumentToConstructor" // Optional
+	]
 
 How to start test via the URL
 ---

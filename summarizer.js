@@ -67,9 +67,7 @@ Summarizer.prototype.loadAdapter = function(test) {
 	// Load the adapter to the iframe
 	this.iframe.src = test.path + "adapter.html";
 	this.iframe.onload = function() {
-		var args = {};
-		args["group"] = test.group[0];
-		this.contentWindow.createAdapter(args)
+		this.contentWindow.createAdapter(test.args);
 	}
 }
 /*

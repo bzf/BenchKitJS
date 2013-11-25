@@ -6,7 +6,7 @@
 
 // Takes a URL and returns a list with options
 function parseUrl(url) {
-	var list = listAll;
+	var list = testsData;
 	var params;
 
 	if(url) {
@@ -22,7 +22,6 @@ function parseUrl(url) {
                 return list[key];
     });
 	
-    return n_list;
 	return n_list;
 }
 
@@ -38,9 +37,10 @@ function buildList(params)  {
 	}
 	else {
 		var args = first.split(",")
-		list = createList(function(group, test) {
-			return ((args.indexOf(group.toLowerCase()) > - 1) ||
-					(args.indexOf(test.name.toLowerCase()) > - 1));
+		list = createList(function(test) {
+			//console.log(group, test);
+
+			return isNameOrGroup(args, test);
 		});
 	}
 
@@ -49,18 +49,29 @@ function buildList(params)  {
 	return list;
 }
 
+function isNameOrGroup(args, test) {
+	for (var a in args) {
+		var arg = args[a];
+
+		if (test.groups.indexOf(arg) > -1) {
+			return true;
+		} else if (arg == test.name.toLowerCase()) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 function createList(if_condition) {
 	var list = []
-	var group;
-	for(var groupName in testsData) {
-		group = testsData[groupName];
-		for(var idTest in group) {
-			var test = group[idTest];
-			test["group"] = groupName;
-			if(if_condition(groupName, test)) {
-				list.push(test);
-			}
+
+	for(var testName in testsData) {
+		var test = testsData[testName];
+
+		if(if_condition(test)) {
+			list.push(test);
 		}
 	}
 

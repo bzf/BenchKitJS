@@ -27,10 +27,12 @@ def get_configs():
 		test = parse_json(filepath)
 
 		for t in test:
-			print t
+			tests[t["name"]] = t
 
 	# Write the config to CONFIG_NAME in ./
-	#with open(CONFIG_NAME, "w") as f:
-	#	f.write(json.dumps(tests))
+	with open("config.js", "w") as f:
+		f.write("var testsData = " + json.dumps(tests))
 
-get_configs()
+# Run it when run as a program
+if __name__ == '__main__':
+	get_configs()
