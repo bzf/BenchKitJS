@@ -1,6 +1,19 @@
 /* progressbar.css */
 
-div.progressbar {
-	font-family: monospace;
-	font-size: 11px;
+.progressbar {
+	background-color:#eee;
+	border:0px solid black; 
+	width:400px;height:20px; 
+	border-radius:3px;
+}
+
+.bar {
+	height:100%;
+	width: 0%; 
+	background-color:#4c4;
+	border-radius:3px;
+}
+
+.bar-title {
+	font-family:monospace;
 }
