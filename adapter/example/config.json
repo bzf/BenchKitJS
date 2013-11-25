@@ -1,0 +1,7 @@
+[{
+    "name": "testName",
+    "path": "/adapters/testFolder/",
+    "version": "X.X",
+    "groups": ["group1", "group2"],
+    "args": "argumentToConstructor"
+}]
