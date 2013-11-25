@@ -1,5 +1,7 @@
 #! coding: utf-8
 
+# Iterates through the adapter configs and generates a config.js file int the root folder
+
 import os, json, StringIO
 
 TEST_FOLDERS = "./adapter/"
@@ -17,6 +19,8 @@ def get_configs():
 	tests = {}
 
 	for t in os.listdir(TEST_FOLDERS):
+		if t is "example":
+			continue
 		filepath = TEST_FOLDERS + t + "/" + CONFIG_NAME
 
 		# Check if there is a config.js file in that folder
