@@ -32,15 +32,16 @@ var Adapter = function(args) {
 	var v8 = ["v8"];
 	var sunspider = ["sunspider"];
 
-	switch (args.group) {
+	switch (args) {
 		case "js":
-			regexps = regexps.concat(sunspider);
+			regexps = regexps.concat(jslib, dromaeo);
 			break;
 		case "dom":
-			regexps = regexps.concat(sunspider);
+			regexps = regexps.concat(cssquery, dom);
 			break;
 		default:
-			regexps = regexps.concat(cssquery, jslib, dromaeo, dom);
+			regexps = regexps.concat();
+			break;
 	}
 	
 	cssquery, jslib, dromaeo, dom, v8, sunspider = null;

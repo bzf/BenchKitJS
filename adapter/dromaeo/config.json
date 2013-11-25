@@ -1,0 +1,16 @@
+[
+	{
+		"name": "dromaeo-dom", 
+		"path": "/adapter/dromaeo/",
+		"version": "0.1",
+		"groups": ["dom", "high-mem"],
+		"args": "dom"
+	},
+	{
+		"name": "dromaeo-js", 
+		"path": "/adapter/dromaeo/",
+		"version": "0.1",
+		"groups": ["dom", "high-mem"],
+		"args": "js"
+	}
+]
