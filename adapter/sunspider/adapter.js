@@ -11,7 +11,7 @@ var Adapter = function() {
 Adapter.prototype.runTest = function() {
 	var self = this;
 
-	document.getElementById("adapterFrame").src = "test/sunspider-1.0.1/driver.html";
+	document.getElementById("adapterFrame").src = "test/sunspider-1.0.2/driver.html";
 	
 	var iframe = document.getElementById("adapterFrame");
 	var contentWindow = iframe.contentWindow;
