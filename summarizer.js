@@ -135,8 +135,8 @@ Summarizer.prototype.complete = function() {
 	this.progressbar("done");
 
 	this.iframe.src = "";
-	this.output("Complete <br />");
-	this.output("");
+	this.output("<br />Complete <br />");
+	this.output("<br />");
 	console.log(JSON.stringify(this.data));
 	this.output(syntaxHighlight(JSON.stringify(this.data, undefined, 2)));
 }
