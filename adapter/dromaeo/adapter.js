@@ -19,11 +19,7 @@
 var Adapter = function(args) {
 	this.data = [];
 	var regexps = [];
-
-	this.config = {
-		name : "Dromaeo",
-		version : "?"
-	};
+	this.delay = 100;
 
 	var cssquery = ["cssquery-ext", "cssquery-dojo", "cssquery-yui", "cssquery-jquery", "cssquery-prototype", "cssquery-mootools"];
 	var jslib = ["jslib-attr", "jslib-event-jquery", "jslib-event-prototype", /*"jslib-mod",*/ "jslib-style", "jslib-traverse-prototype", "jslib-traverse-jquery"];
@@ -72,7 +68,7 @@ Adapter.prototype.runTest = function(regexps) {
 				document.getElementById("adapterFrame").src = "test/index.html?(" + regexps[counter] +")";
 
 				start = Date.now();
-			}, 10000);
+			}, this.delay);
 		}
 		else {
 			window.parent.output(": " + (Date.now() - start)/1000 + "s<br />");
