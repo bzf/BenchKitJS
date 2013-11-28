@@ -16,9 +16,19 @@ html, body {
     background: black;
 }
 
-#output,
+#output{
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-top: 40px;
+    
+    font-family: monospace;
+    border: 1px solid green;
+    overflow: scroll;
+    height:70%;
+}   
 #progressbar {
 	margin-left: 60px;
+    margin-right: 60px;
 	margin-top: 40px;
     font-family: monospace;
 }	
@@ -32,3 +42,9 @@ html, body {
     height: 99%;
     display: inline;	
 }
+pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+.string { color: #8AC; }
+.number { color: #ec7; }
+.boolean { color: #44b; }
+.null { color: #b4b; }
+.key { color: #D65; }
