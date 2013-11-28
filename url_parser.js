@@ -94,8 +94,7 @@ function parse_options(params, list) {
 		// Remove tests as specified
 		for (index in list) {
 			var object = list[index];
-			if (args.indexOf(object.group.toLowerCase()) != -1 ||
-					args.indexOf(object.name.toLowerCase()) != -1) continue;
+			if (isNameOrGroup(args, object)) continue;
 
 			new_list[object.name] = object;
 		}
@@ -105,10 +104,10 @@ function parse_options(params, list) {
 		new_list = list;
 
 		// Add all tests which should be included
-		for (index in listAll) {
-			var object = listAll[index];
-			if (args.indexOf(object.group.toLowerCase()) == -1 && 
-					args.indexOf(object.name.toLowerCase()) == -1) continue;
+		for (index in testsData) {
+			var object = testsData[index];
+			console.log(object)
+			if (!isNameOrGroup(args, object)) continue;
 
 			new_list[object.name] = object;
 		}
