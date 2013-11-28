@@ -22,7 +22,7 @@ var Adapter = function() {
 Adapter.prototype.runTest = function() {
     var self = this;
     
-    document.getElementById("adapterFrame").src = "test/test.html";
+    document.getElementById("adapterFrame").src = "test/html5test-version-5.0/test.html";
     
     var iframe = document.getElementById("adapterFrame");
     var contentWindow = iframe.contentWindow;

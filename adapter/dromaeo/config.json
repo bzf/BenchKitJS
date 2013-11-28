@@ -4,7 +4,8 @@
 		"path": "/adapter/dromaeo/",
 		"version": "0.1",
 		"groups": ["dom", "high-mem"],
-		"args": "dom"
+		"args": "dom",
+		"source": "dromaeo-master.tar.gz"
 	},
 	{
 		"name": "dromaeo-js", 
