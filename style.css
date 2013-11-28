@@ -4,6 +4,9 @@ html, body {
 	padding:0;
 	margin:0;
 }
+::-webkit-scrollbar { 
+    display: none; 
+}
 #left,
 #right {
     width: 50%;
@@ -13,12 +16,28 @@ html, body {
 }
 #left {
 	color: #aaa;
-    background: black;
+    background: #191919;
 }
 
-#output,
+#output{
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-top: 40px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+
+    border-radius:3px;
+    
+    font-family: monospace;
+    border: 1px solid #aaa;
+    background-color: #292929;
+    overflow: scroll;
+    height:70%;
+}   
 #progressbar {
 	margin-left: 60px;
+    margin-right: 60px;
 	margin-top: 40px;
     font-family: monospace;
 }	
@@ -31,4 +50,33 @@ html, body {
     width: 100%;
     height: 99%;
     display: inline;	
+}
+pre {padding: 5px; margin: 5px; }
+.string { color: #8AC; }
+.number { color: #ec7; }
+.boolean { color: #44b; }
+.null { color: #b4b; }
+.key { color: #D65; }
+
+/* progressbar.css */
+
+.progressbar {
+    background-color:#eee;
+    border:0px solid black; 
+    width:100%;
+    height:20px; 
+    border-radius:3px;
+}
+
+.bar {
+    height:100%;
+    width: 0%; 
+    background-color:#4c4;
+    border-radius:3px;
+    font-family: monospace;
+    color: white;
+}
+
+.bar-title {
+    font-family:monospace;
 }
