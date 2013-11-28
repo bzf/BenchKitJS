@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Benchmark - Flash</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="author" content="The Man in Blue" />
+	<meta name="robots" content="all" />
+	<meta name="MSSmartTagsPreventParsing" content="true" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+
+	<style type="text/css">
+	
+	html
+	{
+		height: 100%;
+	}
+	
+	body
+	{
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #ffffff;
+	}
+	
+	#benchmark
+	{
+		width: 100%;
+		height: 100%;
+	}
+	
+	</style>
+
+	<script type="text/javascript" src="js/swfobject.js"></script>
+	<script type="text/javascript">
+		var flashvars = {};
+		var params = {};
+		params.play = "true";
+		params.loop = "true";
+		params.menu = "true";
+		params.quality = "high";
+		params.scale = "noscale";
+		params.salign = "tl";
+		params.wmode = "window";
+		params.bgcolor = "#ffffff";
+		params.allowfullscreen = "true";
+		params.allowscriptaccess = "sameDomain";
+		params.swliveconnect = "true";
+		var attributes = {};
+		attributes.align = "middle";
+		swfobject.embedSWF("Benchmark.swf", "benchmark", "100%", "100%", "9.0.0", "expressInstall.swf", flashvars, params, attributes);
+		
+		function getLocation()
+		{
+			return window.location.href;
+		}
+		
+	</script>
+</head>
+<body>
+	<div id="benchmark">
+	</div> <!-- /#benchmark -->
+</body>
+</html>
