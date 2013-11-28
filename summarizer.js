@@ -9,7 +9,7 @@
  * Constructor for Summerizer
  */
 var Summarizer = function() {
-	this.tests = parseUrl(window.getQueryString()["test"]);//testsData;
+	this.tests = parseUrl(window.getQueryString());//testsData;
 	console.log(this.tests)
 	this.counter = 0;
 	this.currentTest = null;
