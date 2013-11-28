@@ -6,16 +6,21 @@
 
 // Takes a URL and returns a list with options
 function parseUrl(url) {
-	var list = {};
+	var list = testsData;
 	var params;
 
-	if(url["test"]) {
+	if(url) {
 		/* Filter away all empty objects in the list and put them all
 		 * in lower-case. */
-		list = buildList(url["test"].replace("/", ""));
-		
+		if(url["test"]) {
+			/* Filter away all empty objects in the list and put them all
+			 * in lower-case. */
+			list = buildList(url["test"].replace("/", ""));
+			
+		}
+		list = parse_options(url, list);	
 	}
-	list = parse_options(url, list);
+	
 	var n_list = Object.keys(list).map(function (key) {
                 return list[key];
     });
