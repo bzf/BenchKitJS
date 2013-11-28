@@ -10,14 +10,17 @@ function parseUrl(url) {
 	var params;
 
 	if(url) {
-		url = url.replace(/#[\/]?/, "");
-
 		/* Filter away all empty objects in the list and put them all
 		 * in lower-case. */
-		params = url.split("/").filter(function(n){return n});
-		params = params.map(function(n){return n.toLowerCase()});
-		list = buildList(params);
+		if(url["test"]) {
+			/* Filter away all empty objects in the list and put them all
+			 * in lower-case. */
+			list = buildList(url["test"].replace("/", ""));
+			
+		}
+		list = parse_options(url, list);	
 	}
+	
 	var n_list = Object.keys(list).map(function (key) {
                 return list[key];
     });
@@ -27,16 +30,16 @@ function parseUrl(url) {
 
 function buildList(params)  {
 	// The first parameter specifies which tests that should be run.
-	var first = params.shift();
+
 	var list = [];
 
-	if(first == "all") {
+	if(params === "all") {
 		list = createList(function() {
 			return true;
 		});
 	}
 	else {
-		var args = first.split(",")
+		var args = params.split(",")
 		list = createList(function(test) {
 			//console.log(group, test);
 
@@ -45,7 +48,6 @@ function buildList(params)  {
 	}
 
 	// Filter the list with the parameters
-	list = parse_options(params, list);
 	return list;
 }
 
@@ -55,7 +57,7 @@ function isNameOrGroup(args, test) {
 
 		if (test.groups.indexOf(arg) > -1) {
 			return true;
-		} else if (arg == test.name.toLowerCase()) {
+		} else if (arg === test.name.toLowerCase()) {
 			return true;
 		}
 	}
@@ -78,42 +80,38 @@ function createList(if_condition) {
 	return list;
 }
 
-// Takes a list of parameters, and filters the given list so it matches
-// the specified parameters.
-function parse_options(params, list) {
-	if (params.length == 0) return list;
+/*
+ *	Includes and excludes the specified tests
+ */
+function parse_options(url, tests) {
 
-	var option = params.shift();
-	var new_list = {};
-
-	// Modify the list based on the option
-	if (option == "exclude") {
-		// Next parameter is the options
-		var args = params.shift().split(",");
-
-		// Remove tests as specified
-		for (index in list) {
-			var object = list[index];
-			if (args.indexOf(object.group.toLowerCase()) != -1 ||
-					args.indexOf(object.name.toLowerCase()) != -1) continue;
-
-			new_list[object.name] = object;
-		}
-	} else if (option == "include") {
-		// Next parameter is the options
-		var args = params.shift().split(",");
-		new_list = list;
+	if (url["include"]) {
+		
+		var args = url["include"].replace("/", "").split(",");
 
 		// Add all tests which should be included
-		for (index in listAll) {
-			var object = listAll[index];
-			if (args.indexOf(object.group.toLowerCase()) == -1 && 
-					args.indexOf(object.name.toLowerCase()) == -1) continue;
+		for (index in testsData) {
+			var object = testsData[index];
+			if (!isNameOrGroup(args, object)) continue;
 
-			new_list[object.name] = object;
+			tests[object.name] = object;
 		}
 	}
 
-	/* Recursion is pretty */
-	return parse_options(params, new_list);
+	// Modify the list based on the option
+	if (url["exclude"]) {
+		var new_list = {};
+		var args = url["exclude"].replace("/", "").split(",");
+
+		// Remove tests as specified
+		for (index in tests) {
+			var object = tests[index];
+			if (isNameOrGroup(args, object)) continue;
+
+			new_list[object.name] = object;
+		}
+		tests = new_list;
+	} 
+
+	return tests;
 };

@@ -9,7 +9,8 @@
  * Constructor for Summerizer
  */
 var Summarizer = function() {
-	this.tests = parseUrl(window.location.hash);//testsData;
+	this.tests = parseUrl(window.getQueryString());//testsData;
+	console.log(this.tests)
 	this.counter = 0;
 	this.currentTest = null;
 	this.iframe = document.getElementById("mainFrame");
@@ -148,3 +149,18 @@ else { // event not supported:
         }
     }, 100);
 }
+
+// Parse url pattern
+function getQueryString() {
+	var q = window.location.search.substring(1);
+	return (function(a) {
+		if (a == "") return {};
+		var b = {};
+		for (var i = 0; i < a.length; ++i) {
+			var p = a[i].split('=');
+			if (p.length != 2) continue;
+			b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+		}
+		return b;
+	})(q.split("&"));
+};
