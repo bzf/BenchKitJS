@@ -5,9 +5,13 @@
 import os, json
 
 class MakeConfig:
-	TEST_FOLDERS = "./adapter/"
-	CONFIG_NAME = "config.json"
-	tests = {}
+	def __init__(self):
+		self.TEST_FOLDERS = "./adapter/"
+		self.CONFIG_NAME = "config.json"
+		self.tests = {}
+
+		# Load all configs
+		self.load_configs()
 
 	def parse_json(self, path):
 		json_data = ""
@@ -43,5 +47,4 @@ class MakeConfig:
 # Run it when run as a program
 if __name__ == '__main__':
 	mc = MakeConfig()
-	mc.load_configs()
 	mc.write_to_file()
