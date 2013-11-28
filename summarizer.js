@@ -16,6 +16,7 @@ var Summarizer = function() {
 	this.iframe = document.getElementById("mainFrame");
 	this.data = {};
 	this.progressbar = new Progressbar("progressbar", "Running", this.tests.length)
+	this.startTime = Date.now();
 }
 
 /*
@@ -135,7 +136,7 @@ Summarizer.prototype.complete = function() {
 	this.progressbar("done");
 
 	this.iframe.src = "";
-	this.output("<br />Complete <br />");
+	this.output("<br />Completed in " + (Math.round((Date.now() - this.startTime)/10)/100) + " seconds<br />");
 	this.output("<br />");
 	console.log(JSON.stringify(this.data));
 	this.output(syntaxHighlight(JSON.stringify(this.data, undefined, 2)));
