@@ -18,7 +18,7 @@ var Adapter = function(args) {
 Adapter.prototype.runTest = function() {
 	var self = this;
 	
-	document.getElementById("adapterFrame").src = "test/index.html";
+	document.getElementById("adapterFrame").src = "test/krakenbenchmark.mozilla.org/index.html";
 	
 	var iframe = document.getElementById("adapterFrame");
 	var contentWindow = iframe.contentWindow;
