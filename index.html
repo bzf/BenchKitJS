@@ -1,42 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-html, body {
-	font-family: mono;
-	height:100%;
-	padding:0;
-	margin:0;
-}
-#left,
-#right {
-    width: 50%;
-    height: 100%;
-    display: inline;
-    float: left;
-}
-#left {
-	color: #aaa;
-    background: black;
-}
+	<link href="progressbar.css" type="text/css" rel="stylesheet" ></link>
+	<link href="style.css" type="text/css" rel="stylesheet" ></link>
 
-#output {
-	margin-left: 60px;
-	margin-top: 40px;
-}	
-
-#right {
-    background: white;
-}
-#right>iframe {
-	border: 0;
-    width: 100%;
-    height: 99%;
-    display: inline;	
-}
-</style>
 <body>
   	<div id="left">
+  		<div id="progressbar">
+
+		</div>
 	  	<div id="output">
 
 		</div>
@@ -45,8 +17,10 @@ html, body {
   		<iframe id="mainFrame"></iframe>
 	</div>
 <script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="progressbar.js"></script>
 <script type="text/javascript" src="url_parser.js"></script>
 <script type="text/javascript" src="summarizer.js"></script>
+
 </body>
 </html>
 	

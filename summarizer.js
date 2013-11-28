@@ -14,6 +14,7 @@ var Summarizer = function() {
 	this.currentTest = null;
 	this.iframe = document.getElementById("mainFrame");
 	this.data = {};
+	this.progressbar = new Progressbar("progressbar", "Running", this.tests.length)
 }
 
 /*
@@ -33,6 +34,7 @@ Summarizer.prototype.loadAdapter = function(test) {
 	// Store this to make it accessible in a function scope
 	var self = this;	
 	this.currentTest = test;
+	//this.progressbar(this.currentTest.name)
 	this.output("Running: " + this.currentTest.name + "<br />");
 
 	// Callback for the adapater, so that it can send the data back
@@ -60,7 +62,7 @@ Summarizer.prototype.loadAdapter = function(test) {
 		    window.parent.document.getElementById("left").style.display = "block";
 		    window.parent.document.getElementById("left").style.width = "50%";
 		    window.parent.document.getElementById("right").style.width = "50%";
-	}
+		}
     }
 
 
@@ -79,6 +81,8 @@ Summarizer.prototype.loadAdapter = function(test) {
 Summarizer.prototype.doneAdapter = function(data) {
 	this.data[this.currentTest.name] = data;
 
+	this.progressbar("hej")
+
 	// Increase counter
 	this.counter++;
 	// Check if done
@@ -95,6 +99,7 @@ Summarizer.prototype.doneAdapter = function(data) {
 Summarizer.prototype.runAdapter = function() {
 	// Next test
 	var test = this.tests[this.counter]
+
 	this.loadAdapter(test)
 }
 

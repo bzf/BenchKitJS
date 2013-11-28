@@ -37,10 +37,21 @@ var Progressbar = function createProgressbar(parent_id, name, size)
 		/* Tick and set the name of next test */
 		current += (1/size)*100;
 
+		//alert(current)
+
 		update();
+
+		//alert(progressbar.children[0].children[1].children[0].style["width"]);
+
 		progressbar.children[0].children[0].innerHTML = name + name_of_test
+
+		//alert(progressbar.children[0].children[0].innerHTML)
+
 
 		return (current >= 100);
 	};
 };
 
+//var p = new Progressbar('pbc', "hello", 10);
+
+//p("ey")
