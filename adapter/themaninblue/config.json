@@ -1,0 +1,24 @@
+[
+	{
+		"name": "themaninblue-html",
+		"path": "/adapter/themaninblue/",
+		"version": "0.1",
+		"groups": ["dom"],
+		"args": "html",
+		"source": "themaninblue.tar.gz"
+	},
+	{
+		"name": "themaninblue-canvas",
+		"path": "/adapter/themaninblue/",
+		"version": "0.1",
+		"args": "canvas",
+		"groups": ["canvas"]
+	},
+	{
+		"name": "themaninblue-svg",
+		"path": "/adapter/themaninblue/",
+		"version": "0.1",
+		"args": "svg",
+		"groups": ["svg"]
+	}	
+]
