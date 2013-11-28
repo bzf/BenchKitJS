@@ -14,9 +14,8 @@ var Progressbar = function createProgressbar(parent_id, name, size)
 		progressbar.children[0].children[1].children[0].style["width"] = current + "%"
 	};
 
-	/* Data worth holding onto */
-
 	var current = 0;
+	var iterator = -1;
 	var current_test = "Nothing";
 
 	/* Create the progressbar */
@@ -35,23 +34,13 @@ var Progressbar = function createProgressbar(parent_id, name, size)
 	/* Return the tick-function */
 	return function(name_of_test) {
 		/* Tick and set the name of next test */
-		current += (1/size)*100;
-
-		//alert(current)
+		iterator += 1;
+		current = Math.round((iterator/size)*100);
 
 		update();
 
-		//alert(progressbar.children[0].children[1].children[0].style["width"]);
-
-		progressbar.children[0].children[0].innerHTML = name + name_of_test
-
-		//alert(progressbar.children[0].children[0].innerHTML)
-
+		progressbar.children[0].children[0].innerHTML = name + " " + name_of_test + "   " + current + "%"
 
 		return (current >= 100);
 	};
 };
-
-//var p = new Progressbar('pbc', "hello", 10);
-
-//p("ey")

@@ -12,6 +12,8 @@
 	width: 0%; 
 	background-color:#4c4;
 	border-radius:3px;
+	font-family: monospace;
+	color: white;
 }
 
 .bar-title {

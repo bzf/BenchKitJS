@@ -1,5 +1,5 @@
 html, body {
-	font-family: mono;
+	font-family: monospace;
 	height:100%;
 	padding:0;
 	margin:0;
@@ -20,6 +20,7 @@ html, body {
 #progressbar {
 	margin-left: 60px;
 	margin-top: 40px;
+    font-family: monospace;
 }	
 
 #right {

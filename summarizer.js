@@ -33,10 +33,13 @@ Summarizer.prototype.start = function() {
 Summarizer.prototype.loadAdapter = function(test) {
 	// Store this to make it accessible in a function scope
 	var self = this;	
+
 	this.currentTest = test;
-	//this.progressbar(this.currentTest.name)
+
 	this.output("Running: " + this.currentTest.name + "<br />");
 
+	this.progressbar(this.currentTest.name)
+	
 	// Callback for the adapater, so that it can send the data back
 	// to the summarizer
 	window.adapterDone = function(data) {
@@ -81,7 +84,7 @@ Summarizer.prototype.loadAdapter = function(test) {
 Summarizer.prototype.doneAdapter = function(data) {
 	this.data[this.currentTest.name] = data;
 
-	this.progressbar("hej")
+
 
 	// Increase counter
 	this.counter++;
@@ -107,7 +110,9 @@ Summarizer.prototype.runAdapter = function() {
  * Output the completed sessions data to both dom and console.
  */
 Summarizer.prototype.complete = function() {
-	this.iframe.onload = null
+	this.iframe.onload = null;
+	this.progressbar("done");
+
 	this.iframe.src = "";
 	this.output("Complete");
 	this.output("");
