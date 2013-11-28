@@ -15,7 +15,11 @@ var Summarizer = function() {
 	this.currentTest = null;
 	this.iframe = document.getElementById("mainFrame");
 	this.data = {};
-	this.progressbar = new Progressbar("progressbar", "Running", this.tests.length)
+	this.progressbar = new Progressbar("progressbar", "Running", this.tests.length);
+
+	this.startTime = Date.now();
+	this.curTestTime = Date.now();
+
 }
 
 /*
@@ -37,7 +41,7 @@ Summarizer.prototype.loadAdapter = function(test) {
 
 	this.currentTest = test;
 
-	this.output("Running: " + this.currentTest.name + "<br />");
+	this.output("<br />Running: " + this.currentTest.name);
 
 	this.progressbar(this.currentTest.name)
 	
@@ -83,9 +87,10 @@ Summarizer.prototype.loadAdapter = function(test) {
  * @data     formated data from the adapter(result)
  */
 Summarizer.prototype.doneAdapter = function(data) {
+	this.output("<br />" + this.currentTest.name + " finished in " + (Math.round((Date.now() - this.curTestTime)/100)/10) + "s<br />")
+	this.curTestTime = Date.now();
+
 	this.data[this.currentTest.name] = data;
-
-
 
 	// Increase counter
 	this.counter++;
@@ -135,7 +140,8 @@ Summarizer.prototype.complete = function() {
 	this.progressbar("done");
 
 	this.iframe.src = "";
-	this.output("<br />Complete <br />");
+
+	this.output("<br />Completed in " + (Math.round((Date.now() - this.startTime)/100)/10) + " seconds<br />");
 	this.output("<br />");
 	console.log(JSON.stringify(this.data));
 	this.output(syntaxHighlight(JSON.stringify(this.data, undefined, 2)));
