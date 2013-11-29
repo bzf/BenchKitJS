@@ -56,13 +56,13 @@ Adapter.prototype.parseData = function(data) {
                 }, {})
     }
 
-    if (result["result"]["security-csp10"]) {
+    if (result["result"]["security-csp10"] === "1") {
         result["score"]-= 2;        
     }
 
     delete result["result"]["security-csp10"]
 
-    if (result["result"]["storage-indexedDB.arraybuffer"]) {
+    if (result["result"]["storage-indexedDB.arraybuffer"] === "1") {
         result["score"] -= 3;        
     }
 
