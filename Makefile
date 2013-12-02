@@ -3,7 +3,7 @@ SCRIPT_PATH = scripts
 all : config.js unpacked
 
 # Unpack and patch the third party stuff
-unpacked : $(shell find sources -regex ".*\.tar\.gz$\")
+unpacked : $(shell find sources -regex ".*\.tar\.gz$\") clean
 	python $(SCRIPT_PATH)/make_sources.py
 
 # If a *.json-file has changed, update the ./config.js
