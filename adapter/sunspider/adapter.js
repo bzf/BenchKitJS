@@ -1,5 +1,13 @@
-
-// Constructor
+/*
+ * Sunspider *MODIFIED* - JavaScript Benchmark.
+ * http://dromaeo.com/
+ *
+ * Modifications:
+ * - Removed warmup.
+ * - Change runtimes from 10 to 3.
+ *
+ * Gets data by overwriting the function "finish" in sunspider.
+ */
 var Adapter = function() {
 	this.config = {
 		name : "Sunspider",
