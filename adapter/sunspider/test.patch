@@ -1,0 +1,21 @@
+diff -Naur test/sunspider-1.0.2/driver.html test_old/sunspider-1.0.2/driver.html
+--- test/sunspider-1.0.2/driver.html	2013-11-25 16:12:13.000000000 +0100
++++ test_old/sunspider-1.0.2/driver.html	2013-11-25 15:21:14.000000000 +0100
+@@ -43,7 +43,7 @@
+ <script>
+ var testIndex = -1;
+ var currentRepeat = -1;
+-var repeatCount = 10;
++var repeatCount = 2;
+ var warmupMS = 8;
+ 
+ var output = [];
+@@ -78,7 +78,7 @@
+         // work so that all browsers see the CPU at an equal clock rate, but
+         // not so much work that we hide performance problems caused by overly
+         // aggressive power management.
+-        warmup();
++        //warmup();
+ 
+         testFrame.contentDocument.open();
+         testFrame.contentDocument.write(testContents[testIndex]);

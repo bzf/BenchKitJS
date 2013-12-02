@@ -1,0 +1,204 @@
+diff -Naur test/dromaeo-master/web/htmlrunner.js test_working/dromaeo-master/web/htmlrunner.js
+--- test/dromaeo-master/web/htmlrunner.js	2013-12-02 11:01:39.000000000 +0100
++++ test_working/dromaeo-master/web/htmlrunner.js	2013-12-02 11:00:58.000000000 +0100
+@@ -1,4 +1,4 @@
+-var startTest = top.startTest || function(){};
+-var test = top.test || function(name, fn){ fn(); };
+-var endTest = top.endTest || function(){};
+-var prep = top.prep || function(fn){ fn(); };
++var startTest = parent.window.startTest || function(){};
++var test = parent.window.test || function(name, fn){ fn(); };
++var endTest = parent.window.endTest || function(){};
++var prep = parent.window.prep || function(fn){ fn(); };
+diff -Naur test/dromaeo-master/web/store.php test_working/dromaeo-master/web/store.php
+--- test/dromaeo-master/web/store.php	2013-12-02 11:01:39.000000000 +0100
++++ test_working/dromaeo-master/web/store.php	2013-12-02 11:00:58.000000000 +0100
+@@ -25,64 +25,59 @@
+ OTHER DEALINGS IN THE SOFTWARE.
+ */
+ 
+-$server = 'mysql.dromaeo.com';
+-$user = 'dromaeo';
+-$pass = 'dromaeo';
++	$server = 'mysql.dromaeo.com';
++	$user = 'dromaeo';
++	$pass = 'dromaeo';
+ 
+-require('JSON.php');
++	require('JSON.php');
+ 
+-$json = new Services_JSON();
+-$sql = mysql_connect( $server, $user, $pass );
++	$json = new Services_JSON();
++        $sql = mysql_connect( $server, $user, $pass );
+ 
+-mysql_select_db( 'dromaeo' );
++        mysql_select_db( 'dromaeo' );
+ 
+-$id = preg_replace('/[^\d,]/', '', $_REQUEST['id']);
++	$id = str_replace(';', "", $_REQUEST['id']);
+ 
+-if ( $id ) {
+-	$sets = array();
+-	$ids = split(",", $id);
++	if ( $id ) {
++		$sets = array();
++		$ids = split(",", $id);
+ 
+-	foreach ($ids as $i) {
+-		$query = mysql_query( sprintf("SELECT * FROM runs WHERE id=%s;",
+-			mysql_real_escape_string($i)));
+-		$data = mysql_fetch_assoc($query);
+-
+-		$query = mysql_query( sprintf("SELECT * FROM results WHERE run_id=%s;",
+-			mysql_real_escape_string($i)));
+-		$results = array();
++		foreach ($ids as $i) {
++			$query = mysql_query( "SELECT * FROM runs WHERE id=$i;" );
++			$data = mysql_fetch_assoc($query);
+ 	
+-		while ( $row = mysql_fetch_assoc($query) ) {
+-			array_push($results, $row);
+-		}
++			$query = mysql_query( "SELECT * FROM results WHERE run_id=$i;" );
++			$results = array();
++		
++			while ( $row = mysql_fetch_assoc($query) ) {
++				array_push($results, $row);
++			}
+ 
+-		$data['results'] = $results;
+-		$data['ip'] = '';
++			$data['results'] = $results;
++			$data['ip'] = '';
+ 
+-		array_push($sets, $data);
+-	}
++			array_push($sets, $data);
++		}
+ 
+-	echo $json->encode($sets);
+-} else {
+-	$data = $json->decode(str_replace('\\"', '"', $_REQUEST['data']));
++		echo $json->encode($sets);
++	} else {
++		$data = $json->decode(str_replace('\\"', '"', $_REQUEST['data']));
+ 
+-	if ( $data ) {
++		if ( $data ) {
+ 		mysql_query( sprintf("INSERT into runs VALUES(NULL,'%s','%s',NOW(),'%s');",
+-			mysql_real_escape_string($_SERVER['HTTP_USER_AGENT']),
+-			mysql_real_escape_string($_SERVER['REMOTE_ADDR']),
+-			mysql_real_escape_string(str_replace(';', "", $_REQUEST['style']))
+-		));
++			$_SERVER['HTTP_USER_AGENT'], $_SERVER['REMOTE_ADDR'], str_replace(';', "", $_REQUEST['style'])) );
+ 
+ 		$id = mysql_insert_id();
+ 
+ 		if ( $id ) {
+ 
+-			foreach ($data as $row) {
+-				mysql_query( sprintf("INSERT into results VALUES(NULL,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",
+-					$id, $row->collection, $row->version, $row->name, $row->scale, $row->median, $row->min, $row->max, $row->mean, $row->deviation, $row->runs) );
+-			}
++		foreach ($data as $row) {
++			mysql_query( sprintf("INSERT into results VALUES(NULL,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",
++				$id, $row->collection, $row->version, $row->name, $row->scale, $row->median, $row->min, $row->max, $row->mean, $row->deviation, $row->runs) );
++		}
+ 
+-			echo $id;
++		echo $id;
++		}
+ 		}
+ 	}
+-}
+ ?>
+diff -Naur test/dromaeo-master/web/webrunner.js test_working/dromaeo-master/web/webrunner.js
+--- test/dromaeo-master/web/webrunner.js	2013-12-02 11:01:39.000000000 +0100
++++ test_working/dromaeo-master/web/webrunner.js	2013-12-02 11:00:58.000000000 +0100
+@@ -1,5 +1,4 @@
+ (function(){
+-	
+ 	// Populated from: http://www.medcalc.be/manual/t-distribution.php
+ 	// 95% confidence for N - 1 = 4
+ 	var tDistribution = 2.776;
+@@ -8,7 +7,7 @@
+ 	var numTests = 5;
+ 	
+ 	// The type of run that we're doing (options are "runs/s" or "ms")
+-	var runStyle = "runs/s";
++	var runStyle = "ms";
+ 	
+ 	// A rough estimate, in seconds, of how long it'll take each test
+ 	// iteration to run
+@@ -302,7 +301,7 @@
+ 					names.push( name );
+ 
+ 			names = names.sort(function(a, b){
+-				return tests[a].name < tests[b].name ?  -1 :
++				return tests[a].name < tests[b].name ?  -1 : 
+ 					tests[a].name == tests[b].name ?  0 : 1;
+ 			});
+ 
+@@ -323,7 +322,6 @@
+ 
+ 				for ( var i = 0; i < names.length; i++ ) (function(name){
+ 					var test = tests[name];
+-
+ 					queues[name] = [];
+ 					makeElem(name);
+ 					initTest(name);
+@@ -347,12 +345,21 @@
+ 		});
+ 	});
+ 
++
++
+ 	// Remove the next test from the queue and execute it
+ 	function dequeue(){
+ 		if ( interval && queue.length ) {
+ 			queue.shift()();
+ 			
+ 		} else if ( queue.length == 0 ) {
++
++
++		//############################
++		// This piece of code runs the callback when the test is completed
++			window.parent.testDone(dataStore)
++		//############################
++
+ 			interval = false;
+ 			time = 0;
+ 			
+@@ -391,7 +398,7 @@
+ 			}
+ 		}
+ 	}
+-	
++
+ 	function updateTimebar(){
+ 		$("#timebar").html("<span><strong>" + (runStyle === "runs/s" ? Math.pow(Math.E, maxTotal / maxTotalNum) : maxTotal).toFixed(2) + "</strong>" + runStyle + " (Total)</span>");
+ 	}
+@@ -421,6 +428,22 @@
+ 				}
+ 			});
+ 
++		//############################
++		// This piece of code will autostart the test
++
++		if ( interval ) {
++			interval = null;
++			this.value = "Run";
++		} else {
++			if ( !interval ) {
++				interval = true;
++				dequeue();
++			}
++			this.value = "Pause";
++		}
++		//############################
++		
++
+ 		if ( window.limitSearch ) {
+ 			$("#pause").click();
+ 		}

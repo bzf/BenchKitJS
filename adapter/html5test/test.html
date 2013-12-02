@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  
+  <h1>HTML5test</h1>
+  <h2>Testing browser html5 capabilities...</h2> 
+  
+  <!-- Needed to get UserAgent -->
+  <script src="detect.js"></script>
+  <script src="test/html5test-version-5.0/scripts/engine.js"></script>
+
+  <script>
+        //The finish function will be overwritten from adapter.js
+  	function finish(g) {}
+	
+	//Get Browser info from detect.js
+  	Browsers = new UserAgents({
+  		useFeatures: 		true,
+  		detectCamouflage: 	true 
+  	});
+
+	//Run test in engine.js
+	new Test(function(r) {
+		finish(r);
+	});
+
+
+  </script>
+  
+</body>
+</html>

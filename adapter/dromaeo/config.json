@@ -4,7 +4,9 @@
 		"path": "/adapter/dromaeo/",
 		"version": "0.1",
 		"groups": ["dom"],
-		"args": "dom"
+		"args": "dom",
+		"source": "dromaeo-master.tar.gz",
+		"pre-patch": [{"cmd": "make web", "context": "test/dromaeo-master/"}]
 	},
 	{
 		"name": "dromaeo-js", 

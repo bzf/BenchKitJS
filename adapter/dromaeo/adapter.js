@@ -53,8 +53,10 @@ Adapter.prototype.runTest = function(regexps) {
 	var counter = regexps.length-1;
 
 	document.getElementById("adapterFrame").src = null;
-	document.getElementById("adapterFrame").src = "test/index.html?(" + regexps[counter] +")";
+
+	document.getElementById("adapterFrame").src = "test/dromaeo-master/web/index.html?(" + regexps[counter] +")";
 	window.parent.output("<br />┬" + regexps[counter]);
+
 
 	window.testDone = function(data) {
 		
@@ -65,7 +67,7 @@ Adapter.prototype.runTest = function(regexps) {
 			window.parent.output(regexps[counter]);
 			document.getElementById("adapterFrame").src = null;
 			setTimeout(function() {
-				document.getElementById("adapterFrame").src = "test/index.html?(" + regexps[counter] +")";
+				document.getElementById("adapterFrame").src = "test/dromaeo-master/web/index.html?(" + regexps[counter] +")";
 
 				start = Date.now();
 			}, this.delay);

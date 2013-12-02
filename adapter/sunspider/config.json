@@ -3,6 +3,7 @@
 		"name": "Sunspider", 
 		"path": "/adapter/sunspider/",
 		"version": "1.0.1",
-		"groups": ["js"]
+		"groups": ["js"],
+		"source": "sunspider-1.0.2.tar.gz"
 	}
 ]

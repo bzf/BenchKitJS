@@ -3,6 +3,7 @@
 		"name": "HTML5test", 
 		"path": "/adapter/html5test/",
 		"version": "5.0",
-		"groups": ["conformance"]
+		"groups": ["conformance"],
+		"source": "html5test-version-5.0.tar.gz"
 	}
 ]
