@@ -15,7 +15,7 @@ class MakeSources:
 		self.PREFIX = " " * 4
 
 	# Unpack a specific test, always unpack to "path/test/"
-	def unpack_test(self, path, tarname):
+	def unpack_test(self, path, tarname, prepatch=None):
 		# Is the file broken?
 		if not tarfile.is_tarfile(self.SOURCES_ROOT + tarname):
 			sys.stderr.write(self.PREFIX + "Couldn't unpack " + tarname)
@@ -24,11 +24,22 @@ class MakeSources:
 		# Unpack the tar to the folder
 		with tarfile.open(self.SOURCES_ROOT + tarname) as t:
 			t.extractall(path + self.TEST_FOLDER)
-		print self.PREFIX + "Sucessfully unpacked", tarname
+		print self.PREFIX, "Sucessfully unpacked", tarname
+
+		if not prepatch == None:
+			print self.PREFIX, "Pre-patch commands found!"
+
+			# Run the commands in the context of the tests' folder
+			# prepatch are in pairs command:context. All contexts prepends
+			# with the adapters folder
+			for p in prepatch:
+				print self.PREFIX, "Executing:", p["cmd"], "in", path
+				p = subprocess.Popen(p["cmd"].split(" "), cwd=path + p["context"])
+				p.wait()
 
 		# Check if the patch-file exists
 		if not os.path.exists(path + self.PATCH_FILE):
-			sys.stderr.write(self.PREFIX + "Not patching " + tarname + 
+			sys.stderr.write(self.PREFIX + " Not patching " + tarname + 
 					" (no patchfile)\n")
 			return
 
@@ -55,8 +66,10 @@ class MakeSources:
 				sys.stderr.write("Skipping " + k + " (no *.tar.gz)\n")
 				continue
 
+			prepatch = v["pre-patch"] if "pre-patch" in v.keys() else None
+
 			print "Extracting", k
-			self.unpack_test(path, source)
+			self.unpack_test(path, source, prepatch)
 
 # Run it when run as a program
 if __name__ == '__main__':

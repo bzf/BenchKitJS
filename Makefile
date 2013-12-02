@@ -12,4 +12,4 @@ config.js : $(shell find adapter/ -regex ".*/config.json")
 
 # Remove config.js and all extracted tests
 clean :
-	rm -rf config.js adapters/sunspider/test/
+	rm -rf config.js adapter/*/test/
