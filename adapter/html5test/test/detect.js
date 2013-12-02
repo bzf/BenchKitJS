@@ -143,7 +143,8 @@ var UserAgents = (function(){
 	isBrowser: function() { var a = Array.prototype.slice.call(arguments); a.unshift('browser'); return this.isX.apply(this, a); },
 	isEngine: function() { var a = Array.prototype.slice.call(arguments); a.unshift('engine'); return this.isX.apply(this, a); },
 	isOs: function() { var a = Array.prototype.slice.call(arguments); a.unshift('os'); return this.isX.apply(this, a); },
-	
+	isDevice: function() { var a = Array.prototype.slice.call(arguments); a.unshift('device'); return this.isX.apply(this, a); },
+
 	isType: function() {
 	    var valid = false;
 	    for (var a = 0; a < arguments.length; a++) valid = valid || arguments[a] == this.device.type;
