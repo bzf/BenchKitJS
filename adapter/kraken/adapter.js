@@ -33,8 +33,32 @@ Adapter.prototype.runTest = function() {
 }
 
 Adapter.prototype.parseData = function(data) {
+	var len = data.length;
+
+	data = round(data.reduce(merge));
+
 	window.parent.adapterDone(data);
 }
+
+var round = function(obj) {
+	for (var key in obj) {
+		if (!obj.hasOwnProperty(key)) {continue;}
+		obj[key] = Math.round(obj[key]*100)/100;
+	}
+	return obj;
+}
+
+var merge = function(acc, next) {
+	for (var key in acc) {
+		if (!acc.hasOwnProperty(key)) {continue;}
+
+		acc[key] += next[key];
+		acc[key] /= 2;
+		
+	}
+	return acc;
+}
+
 
 function createAdapter(args) {
 	new Adapter(args)
