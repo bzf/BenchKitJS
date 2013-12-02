@@ -10,6 +10,10 @@ unpacked : $(shell find sources -regex ".*\.tar\.gz$\")
 config.js : $(shell find adapter/ -regex ".*/config.json")
 	python $(SCRIPT_PATH)/make_config.py
 
+# Start a simple python-server
+start :
+	python -m SimpleHTTPServer
+
 # Remove config.js and all extracted tests
 clean :
 	rm -rf config.js adapter/*/test/
