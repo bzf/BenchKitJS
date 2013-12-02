@@ -40,9 +40,9 @@ How to start test via the URL
 It is possible to call the page with some arguments in the URL to automatically start specified tests without any user interaction.
 
 The format looks like this:
-```URL: #/<selected_tests>/[<options>]```
+```URL: ?tests=<selected_tests>&[<options>]```
 
-**selected_tests** is a comma-seperated list which specifies which tests should be selected. The elements of the list can either be *all* (which will represents all available tests) or a *group/testname*.
+**selected_tests** is a comma-seperated list which specifies which tests should be selected. The elements of the list can either be *all*, testname (which will represents all available tests) or a *group/testname*.
 The available testgroups as of now are:
 
 * ```dom```
@@ -53,24 +53,24 @@ The available testgroups as of now are:
 
 **options** is filters for the given list. The available options are:
 
-* ```exclude/<selected_tests>```
-* ```include/<selected_tests>```
+* ```exclude=<selected_tests>```
+* ```include=<selected_tests>```
 
 The **options** works as you would expect. If you use the exclude option you will filter out tests from the given list and if you use the include option you will include tests.
 
 ### Examples
 *Run all tests*
 
-	/#/all
+	?tests=all
 
 *Run the test sunspider and the testgroup dom*
 
-	/#/sunspider,dom
+	?tests=sunspider,dom
 
 *Run all tests except sunspider*
 
-	/#/all/exclude/sunspider
+	?tests=all&exclude=sunspider
 
 *Run all tests except the group js but with the test sunspider (which belongs to the group js)*
 
-	/#/all/except/js/include/sunspider
+	?tests=all&exclude=js?include=sunspider
