@@ -1,7 +1,7 @@
 [
 	{
 		"name": "kraken", 
-		"path": "/adapter/kraken/",
+		"path": "adapter/kraken/",
 		"version": "1.1",
 		"groups": ["js", "high-mem"],
 		"source": "krakenbenchmark.mozilla.org.tar.gz"

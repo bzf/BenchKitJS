@@ -73,4 +73,4 @@ The **options** works as you would expect. If you use the exclude option you wil
 
 *Run all tests except the group js but with the test sunspider (which belongs to the group js)*
 
-	?tests=all&exclude=js?include=sunspider
+	?tests=all&exclude=js&include=sunspider

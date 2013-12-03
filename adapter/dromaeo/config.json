@@ -1,7 +1,7 @@
 [
 	{
 		"name": "dromaeo-dom", 
-		"path": "/adapter/dromaeo/",
+		"path": "adapter/dromaeo/",
 		"version": "0.1",
 		"groups": ["dom"],
 		"args": "dom",
@@ -10,7 +10,7 @@
 	},
 	{
 		"name": "dromaeo-js", 
-		"path": "/adapter/dromaeo/",
+		"path": "adapter/dromaeo/",
 		"version": "0.1",
 		"groups": ["js", "high-mem"],
 		"args": "js"
