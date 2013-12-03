@@ -58,7 +58,7 @@ class MakeSources:
 
 		# Unpack all tests
 		for k, v in tests.items():
-			path = v["path"][1:]
+			path = v["path"]
 			source = v["source"] if "source" in v else None
 
 			# Skip it if there's no source specified
