@@ -1,7 +1,7 @@
 [
 	{
 		"name": "themaninblue-html",
-		"path": "/adapter/themaninblue/",
+		"path": "adapter/themaninblue/",
 		"version": "0.1",
 		"groups": ["dom"],
 		"args": "html",
@@ -9,14 +9,14 @@
 	},
 	{
 		"name": "themaninblue-canvas",
-		"path": "/adapter/themaninblue/",
+		"path": "adapter/themaninblue/",
 		"version": "0.1",
 		"args": "canvas",
 		"groups": ["canvas"]
 	},
 	{
 		"name": "themaninblue-svg",
-		"path": "/adapter/themaninblue/",
+		"path": "adapter/themaninblue/",
 		"version": "0.1",
 		"args": "svg",
 		"groups": ["svg"]
