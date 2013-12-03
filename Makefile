@@ -18,9 +18,8 @@ config.js : $(shell find adapter/ -regex ".*/config.json") clean
 start :
 	python -m SimpleHTTPServer
 
-replace : 
-	python $(SCRIPT_PATH)/wgetJS.py
-	python $(SCRIPT_PATH)/replaceJS.py
+update-jslib : 
+	python $(SCRIPT_PATH)/make_jslib.py
 
 # Remove config.js and all extracted tests
 clean :
