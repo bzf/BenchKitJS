@@ -42,7 +42,7 @@ Summarizer.prototype.loadAdapter = function(test) {
 
 	this.currentTest = test;
 
-	this.output("<br />Running: " + this.currentTest.name);
+	this.output("<br /><span id='output-" + this.currentTest.name + "'>" + this.currentTest.name + " </span><br />");
 
 	this.progressbar(this.currentTest.name)
 	
@@ -52,8 +52,8 @@ Summarizer.prototype.loadAdapter = function(test) {
 		self.doneAdapter(data);
 	}
 	// Print function for the left div, used by adapters to print results.
-    window.output = function(text) { 
-    	self.output(text);
+    window.output = function(text, sub_id, override) { 
+    	self.output(text, sub_id, override);
     }
 
    	 //Toggles fullscreen to on or off depending if "state" is "on" or "off"
@@ -91,7 +91,7 @@ Summarizer.prototype.doneAdapter = function(data) {
 	var time = Math.round((Date.now() - this.curTestTime)/100)/10
 	var minutes = Math.floor((time)/60);
 	var seconds = time - (minutes*60);
-	this.output("<br />" + this.currentTest.name + " finished in " + minutes + "m " +seconds + "s<br />")
+	this.output("finished in " + minutes + "m " +seconds + "s", "output-" + this.currentTest.name, false)
 	this.curTestTime = Date.now();
 
 	this.data[this.currentTest.name] = data;
@@ -161,8 +161,14 @@ Summarizer.prototype.complete = function() {
 /*
  * Output helper
  */
-Summarizer.prototype.output = function(text) {
-	document.getElementById("output").innerHTML += text ;
+Summarizer.prototype.output = function(text, sub_id, override) {
+	if (sub_id !== undefined && override === true) {
+		document.getElementById(sub_id).innerHTML = text;
+	} else if (sub_id !== undefined && (override === undefined || override === false)) {
+		document.getElementById(sub_id).innerHTML += text;
+	} else {
+		document.getElementById("output").innerHTML += text;
+	}
 }
 
 // New instance of summarizer

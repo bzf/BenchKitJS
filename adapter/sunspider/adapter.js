@@ -26,8 +26,9 @@ Adapter.prototype.runTest = function() {
 
 	// Wait for iframe to load
 	iframe.onload = function() {
-		// Write over the function finish in sunspider :P
+		// Write over the function finish in sunspider
 		contentWindow.finish = function() {
+
 			self.parseData(contentWindow.output);
 		}
 	};

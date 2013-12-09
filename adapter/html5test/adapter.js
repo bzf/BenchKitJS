@@ -74,6 +74,8 @@ Adapter.prototype.parseData = function(data) {
     result["points"]["storage"] = storage[0] + "/" + (storage[1]-2) 
     result["points"]["security"] = security[0] + "/" + (security[1]-3) 
 
+    window.parent.output("- Result: " + result["score"] + "/" + result["maximum"] + " - ", "output-" + this.config.name, false)
+
     window.parent.adapterDone(result);
 }
     
