@@ -6309,7 +6309,6 @@ if (typeof Benchmark == "undefined" || !Benchmark)
       
       intervalRenderer: function intervalRenderer(interval, ctx)
       {
-		 console.log("LARP!");
          ctx.clearRect(0, 0, GameHandler.width, GameHandler.height);
          var score = GameHandler.benchmarkScoreCount;
          if (interval.framecounter === 0)

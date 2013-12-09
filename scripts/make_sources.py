@@ -24,16 +24,16 @@ class MakeSources:
 		# Unpack the tar to the folder
 		with tarfile.open(self.SOURCES_ROOT + tarname) as t:
 			t.extractall(path + self.TEST_FOLDER)
-		print self.PREFIX, "Sucessfully unpacked", tarname
+		print(self.PREFIX, "Sucessfully unpacked", tarname)
 
 		if not prepatch == None:
-			print self.PREFIX, "Pre-patch commands found!"
+			print(self.PREFIX, "Pre-patch commands found!")
 
 			# Run the commands in the context of the tests' folder
 			# prepatch are in pairs command:context. All contexts prepends
 			# with the adapters folder
 			for p in prepatch:
-				print self.PREFIX, "Executing:", p["cmd"], "in", path
+				print(self.PREFIX, "Executing:", p["cmd"], "in", path)
 				p = subprocess.Popen(p["cmd"].split(" "), cwd=path + p["context"])
 				p.wait()
 
@@ -68,7 +68,7 @@ class MakeSources:
 
 			prepatch = v["pre-patch"] if "pre-patch" in v.keys() else None
 
-			print "Extracting", k
+			print("Extracting", k)
 			self.unpack_test(path, source, prepatch)
 
 # Run it when run as a program
