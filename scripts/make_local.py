@@ -31,7 +31,7 @@ class UseLocalFiles:
 			for newname, path in self.LibBundle.get_list():
 				if path in line:
 					line = re.sub(path, prefix + self.LibBundle.get_jslib() + newname, line)
-					print line,
+                        print line,
 
 		print "Updated", filename
 
