@@ -32,13 +32,13 @@ var Adapter = function(args) {
 		this.suit = "test/svg/index.xml";
 		break;
 	}
-	this.runTest();
+	this.runTest(args);
 }
 
 /*
  * Runs automaticlly when a new instace of Adapter is created
  */
-Adapter.prototype.runTest = function() {
+Adapter.prototype.runTest = function(args) {
     var self = this;
 
     // Reference to the iframe and contentWindow
@@ -69,7 +69,14 @@ Adapter.prototype.runTest = function() {
 			
 			if (results.length == 10) {
 			    clearInterval(interval);
-			    self.parseData(results);
+			  
+			    results = Math.round(calcAverage(results)*100)/100
+
+
+				window.parent.output("- Result: " + results + " FPS - ", "output-themaninblue-" + args, false)
+
+			    window.parent.toggleFullscreen("off");
+			    window.parent.adapterDone(results);
 			}
 	    }, 1000);	
     };   
@@ -79,19 +86,16 @@ Adapter.prototype.runTest = function() {
  * Format the data. E.g sum of avg if several runs.
  * Sends the data back to the summerizer
  */
-Adapter.prototype.parseData = function(data) {
+var calcAverage = function(data) {
     //Calculate the average of our result array.
     var average = data[0];
     for (var i = 1; i < data.length; i++) {
 		average += data[i];
 		average /= 2;
     }
-    
-    window.parent.toggleFullscreen("off");
-
     //Add the average to the result object
-    this.config["result"] = average;    
-    window.parent.adapterDone(this.config);
+    return average;    
+    
 }
 
 /* Called to create an adapter
