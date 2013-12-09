@@ -8,18 +8,19 @@
  *
  * Gets data by overwriting the function "finish" in sunspider.
  */
-var Adapter = function() {
+var Adapter = function(args, path) {
 	this.config = {
 		name : "Sunspider",
 		version : "1.0.1"
 	};
+	this.path = path;
 	this.runTest();
 }
 
 Adapter.prototype.runTest = function() {
 	var self = this;
 
-	document.getElementById("adapterFrame").src = "test/sunspider-1.0.2/driver.html";
+	document.getElementById("adapterFrame").src = this.path + "test/sunspider-1.0.2/driver.html";
 	
 	var iframe = document.getElementById("adapterFrame");
 	var contentWindow = iframe.contentWindow;
@@ -39,7 +40,7 @@ Adapter.prototype.parseData = function(data) {
 	window.parent.adapterDone(data);
 }
 
-function createAdapter(args) {
-	new Adapter(args)
+function createAdapter(args, path) {
+	new Adapter(args, path);
 }
 

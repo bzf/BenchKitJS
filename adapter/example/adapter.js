@@ -1,7 +1,7 @@
 /*
  * Constructor for Adapter
  */x
-var Adapter = function(args) {
+var Adapter = function(args, path) {
 	this.group = args.group
 	
 	// Information about the adapter
@@ -73,6 +73,6 @@ Adapter.prototype.parseData = function(data) {
 /* Called to create an adapter
  * @args [object]
  */
-function createAdapter(args) {
-	new Adapter(args)
+function createAdapter(args, path) {
+	new Adapter(args, path)
 }

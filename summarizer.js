@@ -10,7 +10,6 @@
  */
 var Summarizer = function() {
 	this.tests = parseUrl(window.getQueryString());//testsData;
-	console.log(this.tests)
 	this.counter = 0;
 	this.currentTest = null;
 	this.iframe = document.getElementById("mainFrame");
@@ -74,11 +73,15 @@ Summarizer.prototype.loadAdapter = function(test) {
 		}
     }
 
+	// Load the adapter to the 
+	this.iframe.src = test.path;
+	
+	this.iframe.contentWindow.document.open();
+	this.iframe.contentWindow.document.write(adapterHTML(test.path));
+	this.iframe.contentWindow.document.close();
 
-	// Load the adapter to the iframe
-	this.iframe.src = test.path + "adapter.html";
 	this.iframe.onload = function() {
-		this.contentWindow.createAdapter(test.args);
+		this.contentWindow.createAdapter(test.args, test.path);
 	}
 }
 /*
@@ -201,3 +204,31 @@ function getQueryString() {
 		return b;
 	})(q.split("&"));
 };
+
+function adapterHTML(path) {
+	var html = document.createElement("html");
+
+	var head = document.createElement("head");
+	var css = document.createElement("style");
+	var styles = "html, body { height:100%; padding:0; margin:0; }";
+	styles += "iframe {  border: 0;  width: 100%;  height: 100% }";
+	css.appendChild(document.createTextNode(styles));
+	head.appendChild(css);
+	
+	var body = document.createElement("body");
+
+	var iframe = document.createElement("iframe");
+	iframe.id = "adapterFrame";
+
+	var script = document.createElement("script");
+	script.type = "text/javascript"; 
+	script.src = path + "adapter.js";
+
+	body.appendChild(iframe);
+	body.appendChild(script);
+
+	html.appendChild(head);
+	html.appendChild(body);
+
+	return html.outerHTML;
+}

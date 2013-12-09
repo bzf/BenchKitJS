@@ -17,10 +17,12 @@
 /*
  * Constructor for Adapter
  */
-var Adapter = function(args) {
+var Adapter = function(args, path) {
 	// Information about the adapter
 	this.config = {
 	};
+	this.path = path;
+	
 	switch(args) {
     case "canvas":
 		this.suit = "test/canvas/index.htm";
@@ -48,7 +50,7 @@ Adapter.prototype.runTest = function() {
     window.parent.toggleFullscreen("on");
     
     // Load the test
-    document.getElementById("adapterFrame").src = this.suit;
+    document.getElementById("adapterFrame").src = this.path + this.suit;
 
     // Wait for iframe to load
     iframe.onload = function() {
@@ -97,6 +99,6 @@ Adapter.prototype.parseData = function(data) {
 /* Called to create an adapter
  * @args [object]
  */
-function createAdapter(args) {
-	new Adapter(args)
+function createAdapter(args, path) {
+	new Adapter(args, path)
 }
