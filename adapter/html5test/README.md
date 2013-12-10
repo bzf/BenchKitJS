@@ -7,9 +7,6 @@ Adapter - HTML5Test - Conformance
 ## Version
 Version: Commit 852f79f25a. Downloaded Tuesday 2013-12-10.
 
-## Updating
-When updating the test, copy engine.js from origin.
-
 ## Arguments
 In the file config.json the following arguments can be used.
 
@@ -25,7 +22,7 @@ Group interaction (named "User interaction" on the official page) is removed by 
 This group is worth 25 points.
 
 ### Security Test
-When the security tests will fail if there is no server. The test will affect up to 4 points, 2 points for CSP 1.0 and 2 points for CSP 1.1. CSP is short for Contect Security Policy.
+When the security tests will fail if there is no server. The test will affect up to 5 points, 3 points for CSP 1.0 and 2 points for CSP 1.1. CSP is short for Contect Security Policy.
 These tests (CSP 1.0 and CSP 1.1) of the Security test will fail if the .htaccess file on the server doesn't contain following lines:
 	<FilesMatch "index.html">
 	<IfModule mod_headers.c>
@@ -36,7 +33,7 @@ These tests (CSP 1.0 and CSP 1.1) of the Security test will fail if the .htacces
 	</FilesMatch>
 
 ### Storage Test
-- Objectstore ArrayBuffer support is not reliable and should not be included in the results. According the success report the tests have a value of 3 points.
+- Objectstore ArrayBuffer support is not reliable and should not be included in the results. According the success report the tests have a value of 2 points.
   
 ### Conclusion
 This leads to the conclusion that the result will differ from the official result by up to 32 points. These are removed before sending the report to the callback.
