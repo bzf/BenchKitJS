@@ -206,29 +206,9 @@ function getQueryString() {
 };
 
 function adapterHTML(path) {
-	var html = document.createElement("html");
-
-	var head = document.createElement("head");
-	var css = document.createElement("style");
-	var styles = "html, body { height:100%; padding:0; margin:0; }";
-	styles += "iframe {  border: 0;  width: 100%;  height: 100% }";
-	css.appendChild(document.createTextNode(styles));
-	head.appendChild(css);
-	
-	var body = document.createElement("body");
-
-	var iframe = document.createElement("iframe");
-	iframe.id = "adapterFrame";
-
-	var script = document.createElement("script");
-	script.type = "text/javascript"; 
-	script.src = path + "adapter.js";
-
-	body.appendChild(iframe);
-	body.appendChild(script);
-
-	html.appendChild(head);
-	html.appendChild(body);
-
-	return html.outerHTML;
+	return "<!DOCTYPE html><html><head><style>\
+	html,body{height:100%;padding:0;margin:0;}\
+	iframe{border:0;width:100%;height:100%;}</style></head>\
+	<body><iframe id='adapterFrame'></iframe>\
+	<script src='"+path+"adapter.js'></script></body></html>";
 }
