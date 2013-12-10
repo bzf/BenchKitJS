@@ -76,8 +76,8 @@ Adapter.prototype.runTest = function(args) {
 			  
 			    results = Math.round(calcAverage(results)*100)/100
 
-			    alert("writing: " + "output-themaninblue-" + args)
-				window.parent.output("- Result: " + results + " FPS - ", "output-themaninblue-" + args, false)
+			    			    			    
+			    window.parent.output("- Result: " + results + " FPS - ", "output-themaninblue-" + args, false)
 
 			    window.parent.toggleFullscreen("off");
 			    window.parent.adapterDone(results);
