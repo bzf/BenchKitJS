@@ -99,7 +99,7 @@ Adapter.prototype.parseData = function(data) {
      * Removing indexedDB.arraybuffer since this one randomly show true or false
      * even when it should show false.
      */
-    result = removeResult(result, "storage", "indexedDB.arraybuffer", 2)
+    result = this.removeResult(result, "storage", "indexedDB.arraybuffer", 2)
 
     if (args["remove_group"]) {
         for (var group_name in args["remove_group"]) {
