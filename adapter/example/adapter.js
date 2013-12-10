@@ -3,7 +3,7 @@
  */x
 var Adapter = function(args, path) {
 	this.group = args.group
-	
+	this.path = path;
 	// Information about the adapter
 	this.config = {
 		name : "Example",
@@ -22,7 +22,7 @@ Adapter.prototype.runTest = function() {
 	var contentWindow = iframe.contentWindow;
 	
 	// Load the test
-	document.getElementById("adapterFrame").src = "test/load.html";
+	document.getElementById("adapterFrame").src = this.path + "test/load.html";
 	
 	// There are three ways to get the data from the test.
 
