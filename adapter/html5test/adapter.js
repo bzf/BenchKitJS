@@ -10,73 +10,110 @@
  *
  */
 
-var Adapter = function() {
+var Adapter = function(args, path) {
     this.config = {
         name : "HTML5test",
         version : "5.0"
     };
-
-    this.runTest();
+    this.args = args
+	this.path = path
+    this.runTest()
 }
 
 Adapter.prototype.runTest = function() {
-    var self = this;
+    var self = this
     
-    document.getElementById("adapterFrame").src = "test.html";
-    
-    var iframe = document.getElementById("adapterFrame");
-    var contentWindow = iframe.contentWindow;
+    document.getElementById("adapterFrame").src = this.path + "test.html"
+
+    var iframe = document.getElementById("adapterFrame")
+    var contentWindow = iframe.contentWindow
 
     iframe.onload = function() {
         //Overwrite the finish function in test.html.
         contentWindow.finish = function(data) {
-            self.parseData(data);
+            self.parseData(data)
 	   }
     }
 
 }
 
+Adapter.prototype.removeResult = function (result, group, variable, score) {
+    result["maximum"] -= score;
+    if (result["result"][group + "-" + variable] === "1") {
+        result["score"] -= score
+    }
+    delete result["result"][group + "-" + variable];
+    var group_result = result["points"][group].split("/")
+    result["points"][group] = group_result[0] + "/" + (group_result[1]-score) 
+
+    return result
+}
+
+Adapter.prototype.removeGroup = function (result, group) {
+    /*
+     * If there is no startsWith function in the string object, we create one
+     * since.... well it's very neat to have.
+     */
+    if (typeof String.prototype.startsWith != 'function') {
+        String.prototype.startsWith = function (str){
+            return this.slice(0, str.length) == str;
+        };
+    }
+    if (result["points"][group]) {
+        for (var key in result["result"]) {
+            if (key.startsWith(group+"-")) {
+                this.removeResult(result, group, key.slice(group.length+1, key.length), 0);
+            }
+        }
+        var group_result = result["points"][group].split("/")
+        result["maximum"] -= group_result[1]
+        result["score"] -= group_result[0]
+        //result["points"][group] = group_result[0] + "/" + (group_result[1]-score)
+        delete result["points"][group]
+    } 
+    return result
+}
+
 Adapter.prototype.parseData = function(data) {
-
-
-
-
     var result = {
         score: data.score,
-        maximum: data.maximum -5,
+        maximum: data.maximum,
         points: data.points.split(",").reduce(function(result, kvalue) {
-                    kvalue = kvalue.split("="); 
+                    kvalue = kvalue.split("=")
                     result[kvalue[0]] = kvalue[1]
-                    return result; 
+                    return result;
                 }, {}),
         result: data.results.split(",").reduce(function(result, kvalue) {
-                    kvalue = kvalue.split("="); 
+                    kvalue = kvalue.split("=")
                     result[kvalue[0]] = kvalue[1]
                     return result; 
                 }, {})
     }
 
-    if (result["result"]["security-csp10"] === "1") {
-        result["score"]-= 2;        
+    /*
+     * Removing csp10 and csp11 since these tests can't be run on a python
+     * SimpleHTTP webserver.
+     */
+    result = this.removeResult(result, "security", "csp10", 3)
+    result = this.removeResult(result, "security", "csp11", 2)
+
+    /*
+     * Removing indexedDB.arraybuffer since this one randomly show true or false
+     * even when it should show false.
+     */
+    result = this.removeResult(result, "storage", "indexedDB.arraybuffer", 2)
+
+    if (this.args["remove_group"]) {
+        for (var group_no in this.args["remove_group"]) {
+            this.removeGroup(result, this.args["remove_group"][group_no])
+        }
     }
 
-    delete result["result"]["security-csp10"]
+    window.parent.output("- Result: " + result["score"] + "/" + result["maximum"] + " - ", "output-" + this.config.name, false)
 
-    if (result["result"]["storage-indexedDB.arraybuffer"] === "1") {
-        result["score"] -= 3;        
-    }
-
-    delete result["result"]["storage-indexedDB.arraybuffer"]
-
-    var storage = result["points"]["storage"].split("/")
-    var security = result["points"]["security"].split("/")
-
-    result["points"]["storage"] = storage[0] + "/" + (storage[1]-2) 
-    result["points"]["security"] = security[0] + "/" + (security[1]-3) 
-
-    window.parent.adapterDone(result);
+    window.parent.adapterDone(result)
 }
     
-function createAdapter(args) {
-    new Adapter()
+function createAdapter(args, path) {
+    new Adapter(args, path);
 }

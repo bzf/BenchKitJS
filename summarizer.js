@@ -1,4 +1,3 @@
-
 /*
   - BenchKitJS
   Testing framework, for running several web browser tests in a synchronized order.
@@ -10,7 +9,6 @@
  */
 var Summarizer = function() {
 	this.tests = parseUrl(window.getQueryString());//testsData;
-	console.log(this.tests)
 	this.counter = 0;
 	this.currentTest = null;
 	this.iframe = document.getElementById("mainFrame");
@@ -42,7 +40,7 @@ Summarizer.prototype.loadAdapter = function(test) {
 
 	this.currentTest = test;
 
-	this.output("<br />Running: " + this.currentTest.name);
+	this.output("<br /><span id='output-" + this.currentTest.name + "'>" + this.currentTest.name + " </span><br />");
 
 	this.progressbar(this.currentTest.name)
 	
@@ -52,8 +50,8 @@ Summarizer.prototype.loadAdapter = function(test) {
 		self.doneAdapter(data);
 	}
 	// Print function for the left div, used by adapters to print results.
-    window.output = function(text) { 
-    	self.output(text);
+    window.output = function(text, sub_id, override) { 
+    	self.output(text, sub_id, override);
     }
 
    	 //Toggles fullscreen to on or off depending if "state" is "on" or "off"
@@ -74,12 +72,16 @@ Summarizer.prototype.loadAdapter = function(test) {
 		}
     }
 
-
-	// Load the adapter to the iframe
-	this.iframe.src = test.path + "adapter.html";
+	// Load the adapter to the 
+	//this.iframe.src = test.path;
+	
 	this.iframe.onload = function() {
-		this.contentWindow.createAdapter(test.args);
+		this.contentWindow.createAdapter(test.args, test.path);
 	}
+
+	this.iframe.contentWindow.document.open();
+	this.iframe.contentWindow.document.write(adapterHTML(test.path));
+	this.iframe.contentWindow.document.close();
 }
 /*
  * Called when an adapter is done.
@@ -91,7 +93,7 @@ Summarizer.prototype.doneAdapter = function(data) {
 	var time = Math.round((Date.now() - this.curTestTime)/100)/10
 	var minutes = Math.floor((time)/60);
 	var seconds = time - (minutes*60);
-	this.output("<br />" + this.currentTest.name + " finished in " + minutes + "m " +seconds + "s<br />")
+	this.output("finished in " + minutes + "m " +seconds + "s", "output-" + this.currentTest.name, false)
 	this.curTestTime = Date.now();
 
 	this.data[this.currentTest.name] = data;
@@ -151,8 +153,9 @@ Summarizer.prototype.complete = function() {
 
 	this.output("<br />Completed in " + minutes + "m " +seconds + "s<br />");
 
-	this.data["metadata"] = {"completion-time-ms": Date.now() - this.startTime, "timestamp": Date.now(), "url": document.URL}
-
+	this.data["metadata"] = {"completion-time-ms": Date.now() - this.startTime, 
+		"timestamp": Date.now(), "url": document.URL,
+		"userAgent": navigator.userAgent};
 	this.output("<br />");
 	console.log(JSON.stringify(this.data));
 	this.output(syntaxHighlight(JSON.stringify(this.data, undefined, 2)));
@@ -161,8 +164,14 @@ Summarizer.prototype.complete = function() {
 /*
  * Output helper
  */
-Summarizer.prototype.output = function(text) {
-	document.getElementById("output").innerHTML += text ;
+Summarizer.prototype.output = function(text, sub_id, override) {
+	if (sub_id !== undefined && override === true) {
+		document.getElementById(sub_id).innerHTML = text;
+	} else if (sub_id !== undefined && (override === undefined || override === false)) {
+		document.getElementById(sub_id).innerHTML += text;
+	} else {
+		document.getElementById("output").innerHTML += text;
+	}
 }
 
 // New instance of summarizer
@@ -201,3 +210,11 @@ function getQueryString() {
 		return b;
 	})(q.split("&"));
 };
+
+function adapterHTML(path) {
+	return "<!DOCTYPE html><html><head><style>\
+	html,body{height:100%;padding:0;margin:0;}\
+	iframe{border:0;width:100%;height:100%;}</style></head>\
+	<body><iframe id='adapterFrame'></iframe>\
+	<script src='"+path+"adapter.js'></script></body></html>";
+}

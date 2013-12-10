@@ -3,6 +3,7 @@
 		"name": "HTML5test", 
 		"path": "adapter/html5test/",
 		"version": "5.0",
+		"args": {"remove_group" : ["interaction"]},
 		"groups": ["conformance"],
 		"source": "html5test-version-5.0.tar.gz"
 	}
