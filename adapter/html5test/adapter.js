@@ -36,43 +36,46 @@ Adapter.prototype.runTest = function() {
 
 }
 
+function removeResult(result, group, variable, score) {
+    result["maximum"] -= score;
+    if (result["result"][group + "-" + variable] === "1") {
+        result["score"] -= score
+    }
+    delete result["result"][group + "-" + variable];
+    var group_result = result["points"][group].split("/")
+    result["points"][group] = group_result[0] + "/" + (group_result[1]-score) 
+
+    return result
+}
+
 Adapter.prototype.parseData = function(data) {
-
-
-
-
     var result = {
         score: data.score,
-        maximum: data.maximum -5,
+        maximum: data.maximum,
         points: data.points.split(",").reduce(function(result, kvalue) {
-                    kvalue = kvalue.split("="); 
+                    kvalue = kvalue.split("=")
                     result[kvalue[0]] = kvalue[1]
-                    return result; 
+                    return result;
                 }, {}),
         result: data.results.split(",").reduce(function(result, kvalue) {
-                    kvalue = kvalue.split("="); 
+                    kvalue = kvalue.split("=")
                     result[kvalue[0]] = kvalue[1]
                     return result; 
                 }, {})
     }
 
-    if (result["result"]["security-csp10"] === "1") {
-        result["score"]-= 2;        
-    }
+    /*
+     * Removing csp10 and csp11 since these tests can't be run on a python
+     * SimpleHTTP webserver.
+     */
+    result = removeResult(result, "security", "csp10", 3);
+    result = removeResult(result, "security", "csp11", 2);
 
-    delete result["result"]["security-csp10"]
-
-    if (result["result"]["storage-indexedDB.arraybuffer"] === "1") {
-        result["score"] -= 3;        
-    }
-
-    delete result["result"]["storage-indexedDB.arraybuffer"]
-
-    var storage = result["points"]["storage"].split("/")
-    var security = result["points"]["security"].split("/")
-
-    result["points"]["storage"] = storage[0] + "/" + (storage[1]-2) 
-    result["points"]["security"] = security[0] + "/" + (security[1]-3) 
+    /*
+     * Removing indexedDB.arraybuffer since this one randomly show true or false
+     * even when it should show false.
+     */
+    result = removeResult(result, "storage", "indexedDB.arraybuffer", 2);
 
     window.parent.output("- Result: " + result["score"] + "/" + result["maximum"] + " - ", "output-" + this.config.name, false)
 
