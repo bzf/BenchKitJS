@@ -1,4 +1,3 @@
-
 /*
   - BenchKitJS
   Testing framework, for running several web browser tests in a synchronized order.
@@ -10,7 +9,6 @@
  */
 var Summarizer = function() {
 	this.tests = parseUrl(window.getQueryString());//testsData;
-	console.log(this.tests)
 	this.counter = 0;
 	this.currentTest = null;
 	this.iframe = document.getElementById("mainFrame");
@@ -74,12 +72,16 @@ Summarizer.prototype.loadAdapter = function(test) {
 		}
     }
 
-
-	// Load the adapter to the iframe
-	this.iframe.src = test.path + "adapter.html";
+	// Load the adapter to the 
+	//this.iframe.src = test.path;
+	
 	this.iframe.onload = function() {
-		this.contentWindow.createAdapter(test.args);
+		this.contentWindow.createAdapter(test.args, test.path);
 	}
+
+	this.iframe.contentWindow.document.open();
+	this.iframe.contentWindow.document.write(adapterHTML(test.path));
+	this.iframe.contentWindow.document.close();
 }
 /*
  * Called when an adapter is done.
@@ -151,8 +153,9 @@ Summarizer.prototype.complete = function() {
 
 	this.output("<br />Completed in " + minutes + "m " +seconds + "s<br />");
 
-	this.data["metadata"] = {"completion-time-ms": Date.now() - this.startTime, "timestamp": Date.now(), "url": document.URL}
-
+	this.data["metadata"] = {"completion-time-ms": Date.now() - this.startTime, 
+		"timestamp": Date.now(), "url": document.URL,
+		"userAgent": navigator.userAgent};
 	this.output("<br />");
 	console.log(JSON.stringify(this.data));
 	this.output(syntaxHighlight(JSON.stringify(this.data, undefined, 2)));
@@ -207,3 +210,11 @@ function getQueryString() {
 		return b;
 	})(q.split("&"));
 };
+
+function adapterHTML(path) {
+	return "<!DOCTYPE html><html><head><style>\
+	html,body{height:100%;padding:0;margin:0;}\
+	iframe{border:0;width:100%;height:100%;}</style></head>\
+	<body><iframe id='adapterFrame'></iframe>\
+	<script src='"+path+"adapter.js'></script></body></html>";
+}

@@ -16,11 +16,12 @@
  *
  */
 
-var Adapter = function(args) {
+var Adapter = function(args, path) {
 	this.data = [];
 	var regexps = [];
 	this.delay = 100;
-
+	this.path = path;
+	
 	var cssquery = ["cssquery-ext", "cssquery-dojo", "cssquery-yui", "cssquery-jquery", "cssquery-prototype", "cssquery-mootools"];
 	var jslib = ["jslib-attr", "jslib-event-jquery", "jslib-event-prototype", /*"jslib-mod",*/ "jslib-style", "jslib-traverse-prototype", "jslib-traverse-jquery"];
 	var dromaeo = ["dromaeo-core", "dromaeo-object-array", "dromaeo-string", "dromaeo-object-regex", "dromaeo-object-string", "dromaeo-3d"];
@@ -47,15 +48,17 @@ var Adapter = function(args) {
 
 Adapter.prototype.runTest = function(regexps) {
 	var self = this;
-
+	var path = this.path;
 	var start = Date.now();
 
 	var counter = regexps.length-1;
 
 	document.getElementById("adapterFrame").src = null;
 
-	document.getElementById("adapterFrame").src = "test/dromaeo-master/web/index.html?(" + regexps[counter] +")";
+
 	//window.parent.output("<br />┬" + regexps[counter]);
+	document.getElementById("adapterFrame").src = path + "test/dromaeo-master/web/index.html?(" + regexps[counter] +")";
+
 
 
 	window.testDone = function(data) {
@@ -67,7 +70,7 @@ Adapter.prototype.runTest = function(regexps) {
 			//window.parent.output(regexps[counter]);
 			document.getElementById("adapterFrame").src = null;
 			setTimeout(function() {
-				document.getElementById("adapterFrame").src = "test/dromaeo-master/web/index.html?(" + regexps[counter] +")";
+				document.getElementById("adapterFrame").src = path + "test/dromaeo-master/web/index.html?(" + regexps[counter] +")";
 
 				start = Date.now();
 			}, this.delay);
@@ -84,4 +87,6 @@ Adapter.prototype.parseData = function(data) {
 	window.parent.adapterDone(data);
 }
 
-function createAdapter(args){new Adapter(args);}
+function createAdapter(args, path){
+	new Adapter(args, path);
+}

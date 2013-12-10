@@ -10,22 +10,22 @@
  *
  */
 
-
-var Adapter = function(args) {
+var Adapter = function(args, path) {
     this.config = {
         name : "HTML5test",
         version : "5.0"
     };
     this.args = args
+	this.path = path
     this.runTest()
 }
 
 Adapter.prototype.runTest = function() {
     var self = this
     
-    document.getElementById("adapterFrame").src = "test.html"
+    document.getElementById("adapterFrame").src = this.path + "test.html"
 
-    var iframe = document.getElementById("adapterFrame");
+    var iframe = document.getElementById("adapterFrame")
     var contentWindow = iframe.contentWindow
 
     iframe.onload = function() {
@@ -114,6 +114,6 @@ Adapter.prototype.parseData = function(data) {
     window.parent.adapterDone(result)
 }
     
-function createAdapter(args) {
-    new Adapter(args)
+function createAdapter(args, path) {
+    new Adapter(args, path);
 }

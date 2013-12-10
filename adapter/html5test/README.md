@@ -4,6 +4,9 @@ Adapter - HTML5Test - Conformance
 ## Origin
 	GitHub - (https://github.com/NielsLeenheer/html5test/)
 
+## Version
+Version: Commit 852f79f25a. Downloaded Tuesday 2013-12-10.
+
 ## Updating
 When updating the test, copy engine.js from origin.
 
