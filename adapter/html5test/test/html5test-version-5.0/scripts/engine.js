@@ -8,6 +8,7 @@ Test = (function() {
 		PREFIX = 8, 
 		BLOCKED = 16;	
 	
+	var revision = 1;
 	
 	var blacklists = {};
 	
@@ -28,7 +29,7 @@ Test = (function() {
 		
 		initialize: function(callback, error) {
 			blacklists = {
-				'form.file':						Browsers.isOs('iOS', '<', '6'), 
+				'form.file':						Browsers.isDevice('Xbox 360') || Browsers.isDevice('Xbox One') || Browsers.isOs('Windows Phone') || Browsers.isOs('iOS', '<', '6')  || Browsers.isOs('Android', '<', '2.2'), 
 				'form.date.ui':						Browsers.isBrowser('Sogou Explorer') || Browsers.isBrowser('Maxthon', '<', '4.0.5') || Browsers.isBrowser('UC Browser', '<', '8.6'),
 				'form.month.ui':					Browsers.isBrowser('Sogou Explorer') || Browsers.isBrowser('Maxthon', '<', '4.0.5') || Browsers.isBrowser('UC Browser', '<', '8.6'),
 				'form.week.ui':						Browsers.isBrowser('Sogou Explorer') || Browsers.isBrowser('Maxthon', '<', '4.0.5') || Browsers.isBrowser('UC Browser', '<', '8.6'),
@@ -71,6 +72,10 @@ Test = (function() {
 															Browsers.isBrowser('Espial') ||
 															Browsers.isBrowser('MachBlue XT') ||
 															Browsers.isEngine('Presto', '>=', '2.9')
+														) ||
+														Browsers.isType('gaming') && (
+															Browsers.isDevice('Xbox 360') || 
+															Browsers.isDevice('Xbox One')
 														)
 													)
 			};		
@@ -143,6 +148,7 @@ Test = (function() {
 			var uniqueid = (((1+Math.random())*0x1000000)|0).toString(16).substring(1) + ("0000000000" + (new Date().getTime() - new Date(2010,0,1).getTime()).toString(16)).slice(-10);
 
 			this.callback({
+				revision:	revision,
 				uniqueid:	uniqueid,
 				score:		this.results.points,
 				results:	results.join(','),
@@ -413,7 +419,7 @@ Test = (function() {
 		},
 		
 		getPoints: function() {
-			return this.data.passed > 0 ? this.data.award : 0;
+			return this.data.passed & YES ? this.data.award : 0;
 		},
 		
 		getMaximum: function() {
@@ -839,6 +845,22 @@ Test = (function() {
 			var passed = false;
 			if (this.canvas.getContext) {
 				try {
+					passed = this.canvas.toDataURL('image/vnd.ms-photo').substring(5,23) == 'image/vnd.ms-photo';
+				}
+				catch(e) {
+				}
+			}
+
+			this.section.setItem({
+				id:		'jpegxr',
+				passed:	passed, 
+				value: 	0
+			});
+
+
+			var passed = false;
+			if (this.canvas.getContext) {
+				try {
 					passed = this.canvas.toDataURL('image/webp').substring(5,15) == 'image/webp';
 				}
 				catch(e) {
@@ -1176,7 +1198,7 @@ Test = (function() {
 
 				var passed = false;
 				try { 
-					passed = typeof HTMLElement != 'undefined' && element instanceof HTMLElement && this.isBlock(element) && this.closesImplicitly(elements[e]);
+					passed = element instanceof HTMLElement && !(element instanceof HTMLUnknownElement) && this.isBlock(element) && this.closesImplicitly(elements[e]);
 				} catch(error) {
 				}
 				
@@ -1201,7 +1223,7 @@ Test = (function() {
 
 				var passed = false;
 				try { 
-					passed = typeof HTMLElement != 'undefined' && element instanceof HTMLElement && this.isBlock(element) && (elements[e] != 'figure' || this.closesImplicitly(elements[e]));
+					passed = element instanceof HTMLElement && !(element instanceof HTMLUnknownElement) && this.isBlock(element) && (elements[e] != 'figure' || this.closesImplicitly(elements[e]));
 				} catch(error) {
 				}
 
@@ -1245,7 +1267,7 @@ Test = (function() {
 
 			var passed = false;
 			try { 
-				passed = typeof HTMLElement != 'undefined' && element instanceof HTMLElement && (color = this.getStyle(element, 'background-color')) && (color != 'transparent');
+				passed = element instanceof HTMLElement && !(element instanceof HTMLUnknownElement) && (color = this.getStyle(element, 'background-color')) && (color != 'transparent');
 			} catch(error) {
 			}
 
@@ -1269,9 +1291,9 @@ Test = (function() {
 			var rpSupport = false;
 
 			try {
-				rubySupport = rubyElement && typeof HTMLElement != 'undefined' && rubyElement instanceof HTMLElement;
-				rtSupport = rtElement && typeof HTMLElement != 'undefined' && rtElement instanceof HTMLElement;
-				rpSupport = rpElement && typeof HTMLElement != 'undefined' && rpElement instanceof HTMLElement && this.isHidden(rpElement);
+				rubySupport = rubyElement && rubyElement instanceof HTMLElement && !(element instanceof HTMLUnknownElement);
+				rtSupport = rtElement && rtElement instanceof HTMLElement && !(element instanceof HTMLUnknownElement);
+				rpSupport = rpElement && rpElement instanceof HTMLElement && !(element instanceof HTMLUnknownElement) && this.isHidden(rpElement);
 			} catch(error) {				
 			}
 			
@@ -1301,7 +1323,7 @@ Test = (function() {
 
 			var passed = false;
 			try { 
-				passed = typeof HTMLElement != 'undefined' && element instanceof HTMLElement;
+				passed = element instanceof HTMLElement && !(element instanceof HTMLUnknownElement);
 			} catch(error) {
 			}
 
@@ -1335,7 +1357,7 @@ Test = (function() {
 
 			var passed = false;
 			try { 
-				passed = typeof HTMLElement != 'undefined' && element instanceof HTMLElement;
+				passed = element instanceof HTMLElement && !(element instanceof HTMLUnknownElement);
 			} catch(error) {
 			}
 

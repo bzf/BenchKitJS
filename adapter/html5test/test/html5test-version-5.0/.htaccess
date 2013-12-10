@@ -30,8 +30,19 @@ RewriteRule ^results/television.html$		/backend/controllers/results.php?type=tel
 RewriteRule ^results/other.html$			/backend/controllers/results.php?type=other
 RewriteRule ^results/latest.html$			/backend/controllers/latest.php
 RewriteRule ^results/search.html$			/backend/controllers/search.php
+RewriteRule ^results/related/(.+).html$ 	/backend/controllers/fingerprint.php?id=$1
 RewriteRule ^devicelab/?$					/backend/controllers/lab.php
 
+RewriteRule ^favicon(.*)$					/images/icons/favicon$1
+RewriteRule ^apple-touch-icon(.*)$			/images/icons/apple-touch-icon$1
+RewriteRule ^mstile-(.*)$					/images/icons/mstile-$1
+RewriteRule ^browserconfig.xml				/images/icons/browserconfig.xml
+
+<FilesMatch ".+\.[woff|eot|svg|ttf]">
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+</FilesMatch>
 
 <FilesMatch "detect.html">
 <IfModule mod_headers.c>
@@ -39,10 +50,13 @@ RewriteRule ^devicelab/?$					/backend/controllers/lab.php
 </IfModule>
 </FilesMatch>
 
-<FilesMatch "index.html">
+
+SetEnvIf User-Agent .*Bada.* BROKEN_CSP
+
+<FilesMatch "[index|qr].html">
 <IfModule mod_headers.c>
-    Header set X-WebKit-CSP "default-src 'unsafe-inline' *; frame-src *; options inline-script;"
-    Header set Content-Security-Policy "default-src 'unsafe-inline' *; frame-src *; options inline-script;"
-    Header set X-Content-Security-Policy "default-src 'unsafe-inline' *; frame-src *; options inline-script;"
+    Header set X-WebKit-CSP "default-src 'unsafe-inline' *; frame-src *; options inline-script;" env=!BROKEN_CSP
+    Header set Content-Security-Policy "default-src 'unsafe-inline' *; frame-src *; options inline-script;" env=!BROKEN_CSP
+    Header set X-Content-Security-Policy "default-src 'unsafe-inline' *; frame-src *; options inline-script;" env=!BROKEN_CSP
 </IfModule>
 </FilesMatch>

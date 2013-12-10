@@ -40,7 +40,6 @@
 						LEFT JOIN scores AS s ON (b.variant = s.variant AND (b.version = s.version OR (b.version IS NULL AND s.version IS NULL)))
 						LEFT JOIN fingerprints AS f ON (f.fingerprint = s.fingerprint)
 					WHERE 
-						b.listed = 1 AND
 						s.release = '" . $version . "' AND
 						b.variant = '" . mysql_real_escape_string($browserVariant) . "' AND
 						b.version = '" . mysql_real_escape_string($browserVersion) . "' 
@@ -49,6 +48,8 @@
 				if ($row = mysql_fetch_object($res)) {
 					return $row;
 				}		
+				
+				return;
 			}
 			else {
 				$browserVariant = $browser[0];
@@ -62,7 +63,6 @@
 					LEFT JOIN scores AS s ON (b.variant = s.variant AND (b.version = s.version OR (b.version IS NULL AND s.version IS NULL)))
 					LEFT JOIN fingerprints AS f ON (f.fingerprint = s.fingerprint)
 				WHERE 
-					b.listed = 1 AND
 					s.release = '" . $version . "' AND
 					b.variant = '" . mysql_real_escape_string($browserVariant) . "'
 				ORDER BY
@@ -71,26 +71,7 @@
 			
 			if ($row = mysql_fetch_object($res)) {
 				return $row;
-			}		
-			
-			$res = mysql_query("
-				SELECT 
-					b.variant, IFNULL(b.version,'') AS version, b.nickname, f.score, f.points, f.results 
-				FROM 
-					browserVersions AS b
-					LEFT JOIN scores AS s ON (b.variant = s.variant AND (b.version = s.version OR (b.version IS NULL AND s.version IS NULL)))
-					LEFT JOIN fingerprints AS f ON (f.fingerprint = s.fingerprint)
-				WHERE 
-					b.listed = 1 AND
-					s.release = '" . $version . "' AND
-					b.unique = '" . mysql_real_escape_string($browserVariant) . "'
-				ORDER BY
-					b.release DESC, b.id DESC
-			");
-			
-			if ($row = mysql_fetch_object($res)) {
-				return $row;
-			}	
+			}			
 		}
 		
 	
@@ -98,7 +79,7 @@
 		function getByUniqueId($id) {
 			$res = mysql_query("
 				SELECT 
-					r.uniqueid AS id, 'Unique id' AS nickname, f.score, f.maximum, f.points, f.results, humanReadable, useragentHeader AS useragent, deviceWidth, deviceHeight 
+					r.uniqueid AS id, 'Unique id' AS nickname, f.score, f.maximum, f.points, f.results, humanReadable, useragentHeader AS useragent, deviceWidth, deviceHeight, f.fingerprint 
 				FROM 
 					results AS r
 					LEFT JOIN fingerprints AS f ON (r.fingerprint = f.fingerprint)
@@ -107,6 +88,18 @@
 			");
 			
 			if ($row = mysql_fetch_object($res)) {
+
+				// Update use counter
+				mysql_query('
+					UPDATE
+						results
+					SET 
+						used = used + 1,
+						lastUsed = NOW()
+					WHERE
+						uniqueid = "' . mysql_real_escape_string($id) . '"
+				');
+				
 				return $row;
 			}		
 		}
@@ -115,7 +108,7 @@
 		function getByFingerprint($id) {
 			$res = mysql_query("
 				SELECT 
-					score, points, results 
+					score, maximum, points, results 
 				FROM 
 					fingerprints
 				WHERE 

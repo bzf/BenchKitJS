@@ -23,8 +23,6 @@ var Adapter = function(args, path) {
 	};
 	this.path = path;
 	
-	alert("about to run: " + args)
-
 	switch(args) {
     case "canvas":
 		this.suit = "test/canvas/index.htm";
