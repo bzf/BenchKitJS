@@ -20,8 +20,11 @@ An adapters runs its test inside an iframe. When the adapter has decided it's do
 When all the adapters are finished, the summerizer dumps the data to both the console and the DOM.
 Tests implemented
 ---
-
-  - [Mozilla Dromaeo](http://dromaeo.com/) [2013-11-NN]
+  
+  - [Html5Test](http://html5test.com/)		
+  - [Mozilla Kraken](http://krakenbenchmark.mozilla.org/)
+  - [Mozilla Dromaeo](http://dromaeo.com/)
+  - [Sunspider](http://www.webkit.org/perf/sunspider/sunspider.html)
   - [themaninblue-svg](http://themaninblue.com/experiment/AnimationBenchmark/svg/) [2013-10-17]
   - [themaninblue-canvas](http://themaninblue.com/experiment/AnimationBenchmark/canvas/) [2013-10-17]
   - [themaninblue-html](http://themaninblue.com/experiment/AnimationBenchmark/html/) [2013-10-17]

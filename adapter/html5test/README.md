@@ -1,7 +1,7 @@
 Adapter - HTML5Test - Conformance
 ==========
 
-## Origin
+## Source
 	GitHub - (https://github.com/NielsLeenheer/html5test/)
 
 ## Updating
