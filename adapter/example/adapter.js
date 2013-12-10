@@ -1,9 +1,9 @@
 /*
  * Constructor for Adapter
  */x
-var Adapter = function(args) {
+var Adapter = function(args, path) {
 	this.group = args.group
-	
+	this.path = path;
 	// Information about the adapter
 	this.config = {
 		name : "Example",
@@ -22,7 +22,7 @@ Adapter.prototype.runTest = function() {
 	var contentWindow = iframe.contentWindow;
 	
 	// Load the test
-	document.getElementById("adapterFrame").src = "test/load.html";
+	document.getElementById("adapterFrame").src = this.path + "test/load.html";
 	
 	// There are three ways to get the data from the test.
 
@@ -73,6 +73,6 @@ Adapter.prototype.parseData = function(data) {
 /* Called to create an adapter
  * @args [object]
  */
-function createAdapter(args) {
-	new Adapter(args)
+function createAdapter(args, path) {
+	new Adapter(args, path)
 }

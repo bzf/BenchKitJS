@@ -10,15 +10,15 @@
  * finish() function in test/index.html, line 118.
  */
 
-var Adapter = function(args) {
-	
+var Adapter = function(args, path) {
+	this.path = path;
 	this.runTest();
 }
 
 Adapter.prototype.runTest = function() {
 	var self = this;
 	
-	document.getElementById("adapterFrame").src = "test/krakenbenchmark.mozilla.org/index.html";
+	document.getElementById("adapterFrame").src = this.path + "test/krakenbenchmark.mozilla.org/index.html";
 	
 	var iframe = document.getElementById("adapterFrame");
 	var contentWindow = iframe.contentWindow;
@@ -60,6 +60,6 @@ var merge = function(acc, next) {
 }
 
 
-function createAdapter(args) {
-	new Adapter(args)
+function createAdapter(args, path) {
+	new Adapter(args, path)
 }
