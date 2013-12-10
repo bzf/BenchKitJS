@@ -37,7 +37,7 @@ Adapter.prototype.runTest = function() {
 
 }
 
-function removeResult(result, group, variable, score) {
+Adapter.prototype.removeResult = function (result, group, variable, score) {
     result["maximum"] -= score;
     if (result["result"][group + "-" + variable] === "1") {
         result["score"] -= score
@@ -49,7 +49,7 @@ function removeResult(result, group, variable, score) {
     return result
 }
 
-function removeGroup(result, group) {
+Adapter.prototype.removeGroup = function (result, group) {
     /*
      * If there is no startsWith function in the string object, we create one
      * since.... well it's very neat to have.
@@ -61,7 +61,7 @@ function removeGroup(result, group) {
     }
     for var key, var value in result["result"] {
         if (key.startsWith(group+"-")) {
-            removeResult(result, group, key.slice(group.length+1, key.length), 0);
+            this.removeResult(result, group, key.slice(group.length+1, key.length), 0);
         }
     }
     var group_result = result["points"][group].split("/")
@@ -92,8 +92,8 @@ Adapter.prototype.parseData = function(data) {
      * Removing csp10 and csp11 since these tests can't be run on a python
      * SimpleHTTP webserver.
      */
-    result = removeResult(result, "security", "csp10", 3)
-    result = removeResult(result, "security", "csp11", 2)
+    result = this.removeResult(result, "security", "csp10", 3)
+    result = this.removeResult(result, "security", "csp11", 2)
 
     /*
      * Removing indexedDB.arraybuffer since this one randomly show true or false
@@ -101,10 +101,11 @@ Adapter.prototype.parseData = function(data) {
      */
     result = removeResult(result, "storage", "indexedDB.arraybuffer", 2)
 
-    if (args["remove_group"])
+    if (args["remove_group"]) {
         for (var group_name in args["remove_group"]) {
-            removeGroup(result, group_name)
+            this.removeGroup(result, group_name)
         }
+    }
 
     window.parent.output("- Result: " + result["score"] + "/" + result["maximum"] + " - ", "output-" + this.config.name, false)
 
