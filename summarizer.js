@@ -1,4 +1,3 @@
-
 /*
   - BenchKitJS
   Testing framework, for running several web browser tests in a synchronized order.
@@ -154,8 +153,9 @@ Summarizer.prototype.complete = function() {
 
 	this.output("<br />Completed in " + minutes + "m " +seconds + "s<br />");
 
-	this.data["metadata"] = {"completion-time-ms": Date.now() - this.startTime, "timestamp": Date.now(), "url": document.URL}
-
+	this.data["metadata"] = {"completion-time-ms": Date.now() - this.startTime, 
+		"timestamp": Date.now(), "url": document.URL,
+		"userAgent": navigator.userAgent};
 	this.output("<br />");
 	console.log(JSON.stringify(this.data));
 	this.output(syntaxHighlight(JSON.stringify(this.data, undefined, 2)));
