@@ -59,7 +59,7 @@ Adapter.prototype.removeGroup = function (result, group) {
             return this.slice(0, str.length) == str;
         };
     }
-    for var key, var value in result["result"] {
+    for (var key in result["result"]) {
         if (key.startsWith(group+"-")) {
             this.removeResult(result, group, key.slice(group.length+1, key.length), 0);
         }
