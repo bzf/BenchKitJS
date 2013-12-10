@@ -1,10 +1,7 @@
 SCRIPT_PATH = scripts
-
-all : config.js unpacked list
-
-# Create a list with all files that could be replaced
-list : unpacked
-	python $(SCRIPT_PATH)/findJs.py;
+JSLIB_PATH = js-lib 
+.PHONY : all unpacked start update-local local clean
+all : config.js unpacked update-local
 
 # Unpack and patch the third party stuff
 unpacked : $(shell find sources -regex ".*\.tar\.gz$\")
@@ -18,9 +15,15 @@ config.js : $(shell find adapter/ -regex ".*/config.json") clean
 start :
 	python -m SimpleHTTPServer
 
-update-jslib : 
+# Download and tar nessecary 
+update-local : 
 	python $(SCRIPT_PATH)/make_jslib.py
+
+# Makes use of the downloaded files from update-local
+local :
+	python $(SCRIPT_PATH)/make_local.py
 
 # Remove config.js and all extracted tests
 clean :
 	rm -rf config.js adapter/*/test/ scripts/jsList.txt js-lib/
+

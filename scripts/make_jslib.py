@@ -2,7 +2,7 @@ import os, re, tarfile, fileinput, urllib2
 
 class LibBundle:
 	def __init__(self):
-		self.TARFILE = "sources/jslib.tar"
+		self.TARFILE = "js-lib/jslib.tar"
 		self.ADAPTERS = "adapter/"
 		self.JSLIB = "js-lib/"
 		self.CANDIDATE_FILE = self.JSLIB + "candidate.txt"
@@ -12,13 +12,12 @@ class LibBundle:
 
 	# Create a list of all the files we will download
 	def create_list(self):
-		print "Creating the list"
 		for root, dirs, files in os.walk(self.ADAPTERS):
 			for name in files:
 				filename = os.path.join(root, name)
 				for line in fileinput.FileInput(filename):
 					match = self.regex_links.search(line)
-
+                                        
 					if match:
 						# Add the filename so we know what files to replace
 						if not filename in self.potential_files:
@@ -34,7 +33,9 @@ class LibBundle:
 						# Don't add duplicates
 						if not (new_name in [x for x,y in self.js_files]):
 							self.js_files.append((new_name, filepath))
+                                                        
 
+        def write_candidate(self):
 		# If js-lib/ doesn't exist, create it
 		if not os.path.exists(self.JSLIB):
 			os.makedirs(self.JSLIB)
@@ -55,7 +56,10 @@ class LibBundle:
 
 	def get_jslib(self):
 		return self.JSLIB;
-	
+
+        def get_tarfile(self):                
+                return self.TARFILE;
+
 	def get_files(self):
 		for name, path in self.js_files:
 			connection = urllib2.urlopen(path)
@@ -70,14 +74,18 @@ class LibBundle:
 	def tar_package(self):
 		with tarfile.open(self.TARFILE, "w") as target:
 			# Add all the files from JSLIB
-			[target.add(self.JSLIB + x) for x,y in self.js_files]
-
-		# Remove the jslib folder
+			[target.add(self.JSLIB + x, arcname=x) for x,y in self.js_files]
 
 		print "Successfully packed", self.TARFILE
+
+        # Remove .js files in jslib folder
+        def remove_js_files(self):
+                [os.remove(self.JSLIB + x) for x,y in self.js_files]
 
 if __name__ == '__main__':
 	lb = LibBundle()
 	lb.create_list()
+        lb.write_candidate()
 	lb.get_files()
 	lb.tar_package()
+        lb.remove_js_files()

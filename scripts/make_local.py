@@ -5,17 +5,22 @@ class UseLocalFiles:
 	def __init__(self):
 		self.LibBundle = LibBundle()
 		self.jslib = "sources/jslib.tar"
-
 		self.LibBundle.create_list()
 
 	def unpack(self):
 		# If the jslib-folder doesn't exist, create it
-		if not os.path.exists(self.LibBundle.get_jslib()):
+                if not os.path.exists(self.LibBundle.get_jslib()):
 			os.makedirs(self.LibBundle.get_jslib())
-
+                
 		# Unpack jslib.tar into js-lib/
+                if os.path.exists(self.LibBundle.get_tarfile()):
+                        print "Review and move", self.LibBundle.get_jslib() + self.LibBundle.get_tarfile(), "to ", self.jslib
+                        return False
+
 		with tarfile.open(self.jslib) as t:
-			t.extractall(self.LibBundle.get_jslib())
+                        t.extractall(self.LibBundle.get_jslib())
+                
+                return True
 
 	def replace_src(self, filename):
 		levels_deep = filename.split("/")[:-1]
@@ -44,5 +49,5 @@ class UseLocalFiles:
 
 if __name__ == '__main__':
 	ulf = UseLocalFiles()
-	ulf.unpack()
-	ulf.replace_urls()
+	if ulf.unpack():
+                ulf.replace_urls()
