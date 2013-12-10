@@ -101,8 +101,8 @@ Adapter.prototype.parseData = function(data) {
      */
     result = this.removeResult(result, "storage", "indexedDB.arraybuffer", 2)
 
-    if (args["remove_group"]) {
-        for (var group_name in args["remove_group"]) {
+    if (this.args["remove_group"]) {
+        for (var group_name in this.args["remove_group"]) {
             this.removeGroup(result, group_name)
         }
     }
