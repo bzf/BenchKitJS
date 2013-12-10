@@ -59,16 +59,18 @@ Adapter.prototype.removeGroup = function (result, group) {
             return this.slice(0, str.length) == str;
         };
     }
-    for (var key in result["result"]) {
-        if (key.startsWith(group+"-")) {
-            this.removeResult(result, group, key.slice(group.length+1, key.length), 0);
+    if (result["points"][group]) {
+        for (var key in result["result"]) {
+            if (key.startsWith(group+"-")) {
+                this.removeResult(result, group, key.slice(group.length+1, key.length), 0);
+            }
         }
-    }
-    var group_result = result["points"][group].split("/")
-    result["maximum"] -= group_result[1]
-    result["score"] -= group_result[0]
-    //result["points"][group] = group_result[0] + "/" + (group_result[1]-score)
-    delete result["points"][group] 
+        var group_result = result["points"][group].split("/")
+        result["maximum"] -= group_result[1]
+        result["score"] -= group_result[0]
+        //result["points"][group] = group_result[0] + "/" + (group_result[1]-score)
+        delete result["points"][group]
+    } 
     return result
 }
 
