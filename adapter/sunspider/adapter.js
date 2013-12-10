@@ -1,6 +1,6 @@
 /*
  * Sunspider *MODIFIED* - JavaScript Benchmark.
- * http://dromaeo.com/
+ * http://www.webkit.org/perf/sunspider/sunspider.html
  *
  * Modifications:
  * - Removed warmup.
